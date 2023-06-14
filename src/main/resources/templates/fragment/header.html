@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<div th:fragment="headerFragment">
+    <div class="bg-white shadow-sm osahan-main-nav">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white osahan-header py-0 container">
+            <a class="navbar-brand mr-0" href="/"><img class="img-fluid logo-img "
+                                                       src="/askbootstrap/preview/vegishop/img/logo.png"></a>
+
+            <div class="ml-3 d-flex align-items-center">
+                <div class="input-group mr-sm-2 col-lg-12">
+                    <input type="text" class="form-control" id="inlineFormInputGroupUsername3"
+                           placeholder="Search for Products...">
+                    <div class="input-group-prepend">
+                        <div class="btn btn-success rounded-right"><i class="icofont-search"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="ml-auto d-flex align-items-center">
+
+                <a href="/" data-toggle="modal" data-target="#login"
+                   class="mr-2 text-dark bg-light rounded-pill p-2 icofont-size border shadow-sm">
+                    <i class="icofont-login"></i>
+
+                </a>
+
+                <a href="/askbootstrap/preview/vegishop/cart.html"
+                   class="ml-2 text-dark bg-light rounded-pill p-2 icofont-size border shadow-sm">
+                    <i class="icofont-shopping-cart"></i>
+                </a>
+            </div>
+        </nav>
+
+        <div class="bg-color-head">
+            <div class="container menu-bar d-flex align-items-center">
+                <ul class="list-unstyled form-inline mb-0">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white pl-0" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-white dropdown-toggle" href="home.html#" id="navbarDropdown2"
+                           role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Products
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/listing.html">Listing</a>
+                            <a class="dropdown-item"
+                               href="/askbootstrap/preview/vegishop/product_details.html">Detail</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/picks_today.html">Trending</a>
+                            <a class="dropdown-item"
+                               href="/askbootstrap/preview/vegishop/recommend.html">Recommended</a>
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/fresh_vegan.html">Most
+                                Popular</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-white dropdown-toggle" href="home.html#" id="navbarDropdown3"
+                           role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Checkout Process
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/cart.html">Cart</a>
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/checkout.html">Checkout</a>
+                            <a class="dropdown-item"
+                               href="/askbootstrap/preview/vegishop/successful.html">Successful</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-white dropdown-toggle" href="home.html#" id="navbarDropdown4"
+                           role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            My Order
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/my_order.html">My order</a>
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/status_complete.html">Status
+                                Complete</a>
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/status_onprocess.html">Status
+                                on
+                                Process</a>
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/status_canceled.html">Status
+                                Canceled</a>
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/review.html">Review</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-white dropdown-toggle" href="home.html#" id="navbarDropdown"
+                           role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Extra Pages
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item"
+                               href="/askbootstrap/preview/vegishop/verification.html">Verification</a>
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/promos.html">Promos</a>
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/promo_details.html">Promo
+                                Details</a>
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/terms_conditions.html">Terms &
+                                Conditions</a>
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/privacy.html">Privacy</a>
+                            <a class="dropdown-item" href="terms&amp;conditions.html">Conditions</a>
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/help_support.html">Help
+                                Support</a>
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/help_ticket.html">Help
+                                Ticket</a>
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/refund_payment.html">Refund
+                                Payment</a>
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/faq.html">FAQ</a>
+                            <a class="dropdown-item" href="/templates/signin.html">Sign In</a>
+                            <a class="dropdown-item" href="/templates/signup.html">Sign Up</a>
+                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/search.html">Search</a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="list-unstyled form-inline mb-0 ml-auto">
+                    <a href="/askbootstrap/preview/vegishop/picks_today.html" class="text-white px-3 py-2">Trending</a>
+                    <a href="/askbootstrap/preview/vegishop/promos.html" class="text-white bg-offer px-3 py-2"><i
+                            class="icofont-sale-discount h6"></i>Promos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
