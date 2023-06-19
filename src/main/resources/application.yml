@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/smart_pizza
+    username: root
+    password: root
+
+  jpa:
+    open-in-view: false
+
+  servlet:
+    multipart:
+      file-size-threshold: 10MB
+      max-request-size: 100MB
+
+
+  liquibase:
+    change-log: "classpath:/liquibase/changelog.xml"
+
+
+smartPizza:
+  users:
+    avatar:
+      path: "/home/radik/IdeaProjects/diplomProject/SmartPizza/usersAvatars/"
+
+    default:
+      avatars:
+        path: "/home/radik/IdeaProjects/diplomProject/SmartPizza/src/main/resources/static/userDefaultAvatar/no-profile-picture-icon.png"
+
+

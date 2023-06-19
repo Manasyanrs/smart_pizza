@@ -20,7 +20,7 @@ public class Main {
 
         if (currentUser != null) {
             User user = currentUser.getUser();
-            if (user.getUserRole() == UserRole.ADMINISTRATOR) {
+            if (user.getUserRole() == UserRole.ADMIN) {
                 return "redirect:/admin";
             } else if (user.getUserRole() == UserRole.USER) {
                 return "redirect:/";
