@@ -1,7 +1,6 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
     <property name="now" value="now()" dbms="mysql"/>
 
@@ -91,7 +90,85 @@
                       tableName="users"/>
     </changeSet>
 
+    <changeSet id="dropColumnCountryInAddressesTable" author="manasyan">
+        <dropColumn tableName="addresses" columnName="country"/>
+    </changeSet>
 
+    <changeSet id="addConstraintOnDelete1" author="manasyan">
+        <addForeignKeyConstraint baseTableName="users"
+                                 baseColumnNames="contact_data_id"
+                                 constraintName="users_contact_data_fk"
+                                 referencedTableName="contact_data"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
 
+    <changeSet id="addConstraintOnDelete2" author="manasyan">
+        <addForeignKeyConstraint baseTableName="users"
+                                 baseColumnNames="address_id"
+                                 constraintName="users_addresses_fk"
+                                 referencedTableName="addresses"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
 
+    <changeSet id="addColumnEnabledInTableUsers" author="manasyan">
+        <addColumn tableName="users">
+            <column name="enabled" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="token" type="varchar(255)" defaultValue="null">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="addTableForPhoneOperatorCode" author="manasyan">
+        <createTable tableName="phone_operator_code">
+            <column autoIncrement="true" name="id" type="int(11)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="operator_code" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="addPhoneOperatorCode" author="manasyan">
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="41"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="43"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="49"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="55"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="77"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="91"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="93"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="94"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="95"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="96"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="98"/>
+        </insert>
+        <insert tableName="phone_operator_code">
+            <column name="operator_code" value="99"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

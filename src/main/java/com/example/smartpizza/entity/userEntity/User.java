@@ -47,4 +47,6 @@ public class User {
     private UserRole userRole;
     @Column(name = "profile_img")
     private String avatar;
+    private boolean enabled;
+    private String token;
 }
