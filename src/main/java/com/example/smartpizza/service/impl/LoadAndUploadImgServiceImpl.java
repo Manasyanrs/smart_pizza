@@ -1,6 +1,8 @@
 package com.example.smartpizza.service.impl;
 
 import com.example.smartpizza.service.LoadAndUploadImgService;
+import com.example.smartpizza.utils.CurrentDirectory;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,10 +16,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
+@RequiredArgsConstructor
 public class LoadAndUploadImgServiceImpl implements LoadAndUploadImgService {
+    private final CurrentDirectory currentDirectory;
 
     @Value("${smartPizza.users.default.avatars.path}")
     private String defaultAvatar;
+
     @Override
     public String uploadImg(String path, MultipartFile multipartFile) throws IOException {
         if (multipartFile != null && !multipartFile.isEmpty()) {
@@ -38,7 +43,7 @@ public class LoadAndUploadImgServiceImpl implements LoadAndUploadImgService {
             fis = new FileInputStream(file);
             return IOUtils.toByteArray(fis);
         } else {
-            file = new File(defaultAvatar);
+            file = new File(currentDirectory.getCurrentDirectory() + defaultAvatar);
             fis = new FileInputStream(file);
         }
         return IOUtils.toByteArray(fis);

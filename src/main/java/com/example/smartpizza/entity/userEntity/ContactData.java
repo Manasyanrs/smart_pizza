@@ -23,10 +23,9 @@ public class ContactData {
     @NotEmpty(message = "Email should not be empty!")
     @Email(message = "Email should be valid!")
     private String email;
-    @NotEmpty(message = "Phone number should not be empty(+374 XX-12-34-56)!")
-    @Pattern(regexp = "^(([+1-9]*[\\s\\-]\\d{2}[\\s\\-]\\d{2}[\\s\\-]\\d{2}[\\s\\-]\\d{2})" +
-            "|([+1-9]*[\\s\\-]\\d{2}[\\s\\-]\\d{3}[\\s\\-]\\d{3}))",
-            message = "Phone number should be valid(+374 XX-12-34-56)!")
+    @NotEmpty(message = "Phone number should not be empty(123456)!")
+    @Pattern(regexp = "\\+374\\s\\d{2}\\s\\d{6}|\\d{6}",
+            message = "Phone number should be valid(123456)!")
     private String phoneNumber;
 
 }
