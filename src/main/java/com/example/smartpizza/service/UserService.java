@@ -15,4 +15,8 @@ public interface UserService {
     Optional<User> getUserByEmail(String email);
 
     void saveVerifyData(User user);
+
+    String updateUserData(int id, String name, String surname, String operatorCode, String phoneNumber);
+
+    void saveUserObject(User user);
 }

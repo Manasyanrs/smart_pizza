@@ -4,10 +4,13 @@ package com.example.smartpizza.controller;
 import com.example.smartpizza.entity.userEntity.Address;
 import com.example.smartpizza.entity.userEntity.ContactData;
 import com.example.smartpizza.entity.userEntity.User;
+import com.example.smartpizza.security.CurrentUser;
 import com.example.smartpizza.service.CodeOperatorService;
 import com.example.smartpizza.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -26,6 +29,7 @@ import java.util.UUID;
 public class UserController {
     private final UserService userService;
     private final CodeOperatorService codeOperatorService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/register")
     public String getRequestRegisterPage(ModelMap modelMap,
@@ -75,6 +79,72 @@ public class UserController {
             userService.saveVerifyData(user.get());
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/account")
+    public String getUserAccountPage(ModelMap modelMap) {
+        modelMap.addAttribute("operatorCodes", codeOperatorService.getAll());
+        return "userAccount";
+    }
+
+    @PostMapping("/{id}/updateData")
+    public String updateProfileData(RedirectAttributes redirectAttributes,
+                                    @AuthenticationPrincipal CurrentUser currentUser,
+                                    @PathVariable("id") int userId,
+                                    @RequestParam("name") String name,
+                                    @RequestParam("surname") String surname,
+                                    @RequestParam("operatorCode") String operatorCode,
+                                    @RequestParam("phoneNumber") String phoneNumber) {
+
+        if (currentUser.getUser().getId() == userId) {
+            String response = userService.updateUserData(userId, name, surname, operatorCode, phoneNumber);
+            if (response.equals("reject")) {
+                redirectAttributes.addFlashAttribute("msg", "Please enter correct data.");
+                return "redirect:/user/account";
+            }
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/deactivate_account")
+    public String getDeactivateAccountPage() {
+        return "deactivate_account";
+    }
+
+    @PostMapping("/deactivate_account")
+    public String postDeactivateAccount(RedirectAttributes redirectAttributes,
+                                        @AuthenticationPrincipal CurrentUser currentUser,
+                                        @RequestParam("password") String password) {
+
+        if (passwordEncoder.matches(password, currentUser.getUser().getPassword())) {
+            User user = currentUser.getUser();
+            user.setEnabled(false);
+            userService.saveUserObject(user);
+            return "redirect:/logout";
+        }
+        redirectAttributes.addFlashAttribute("msg", "Incorrect password!");
+        return "redirect:/user/deactivate_account";
+    }
+
+    @GetMapping("/change_password")
+    public String getChangePasswordPage() {
+        return "change_password";
+
+    }
+
+    @PostMapping("/change_password")
+    public String postChangePassword(RedirectAttributes redirectAttributes,
+                                     @RequestParam("oldPassword") String oldPassword,
+                                     @RequestParam("newPassword") String newPassword,
+                                     @AuthenticationPrincipal CurrentUser currentUser) {
+        if (passwordEncoder.matches(oldPassword, currentUser.getUser().getPassword())) {
+            User user = currentUser.getUser();
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userService.saveUserObject(user);
+            return "redirect:/";
+        }
+        redirectAttributes.addFlashAttribute("msg", "Incorrect password!");
+        return "redirect:/user/change_password";
     }
 
 }

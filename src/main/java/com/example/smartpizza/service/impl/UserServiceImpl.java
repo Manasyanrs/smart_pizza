@@ -9,6 +9,9 @@ import com.example.smartpizza.service.*;
 import com.example.smartpizza.utils.CurrentDirectory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -47,10 +51,8 @@ public class UserServiceImpl implements UserService {
             user.setAvatar(avatarName);
             user.setUserRole(UserRole.USER);
 
-            Address addressObj = addressService.save(address);
             ContactData userContactData = contactDataService.save(contactData);
 
-            user.setAddress(addressObj);
             user.setContactData(userContactData);
             user.setEnabled(false);
             user.setToken(UUID.randomUUID().toString());
@@ -61,7 +63,11 @@ public class UserServiceImpl implements UserService {
                     "Verify account", "\nPlease click url and verify your account.\n" +
                             applicationUrl + "/user/verify?email=" + user.getContactData().getEmail() +
                             "&token=" + user.getToken());
-            return userRepository.save(user);
+            User save = userRepository.save(user);
+            address.setUser(save);
+            addressService.save(address);
+
+            return save;
         }
         return null;
     }
@@ -73,6 +79,38 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveVerifyData(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
+    public String updateUserData(int id, String name, String surname, String operatorCode, String phoneNumber) {
+        Optional<User> user = userRepository.findById(id);
+        String phone = "+374 " + operatorCode + " " + phoneNumber;
+
+        if (name.trim().length() >= 3 && surname.trim().length() >= 3 &&
+                Pattern.matches("\\+374\\s\\d{2}\\s\\d{6}|\\d{6}", phone)) {
+            if (user.isPresent()) {
+                user.get().setName(name);
+                user.get().setSurname(surname);
+                user.get().getContactData().setPhoneNumber(phone);
+                ContactData contactData = contactDataService.getDataById(user.get().getContactData().getId());
+                contactData.setPhoneNumber(phone);
+                contactDataService.save(contactData);
+                user.get().setContactData(contactData);
+                userRepository.save(user.get());
+                Authentication authentication =
+                        new UsernamePasswordAuthenticationToken(user.get().getContactData().getEmail(), user.get().getPassword());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                return "ok";
+            }
+
+        }
+        return "reject";
+    }
+
+    @Override
+    public void saveUserObject(User user) {
         userRepository.save(user);
     }
 }

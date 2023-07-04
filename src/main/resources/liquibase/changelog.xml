@@ -24,6 +24,9 @@
             <column name="apartment_number" type="VARCHAR(25)">
                 <constraints nullable="false"/>
             </column>
+            <column name="user_id" type="int(11)">
+                <constraints nullable="true"/>
+            </column>
         </createTable>
     </changeSet>
 
@@ -40,6 +43,7 @@
             </column>
         </createTable>
     </changeSet>
+
     <changeSet id="createTableUsers" author="smartPizza">
         <createTable tableName="users">
             <column autoIncrement="true" name="id" type="int(11)">
@@ -63,9 +67,6 @@
             <column name="contact_data_id" type="int(11)">
                 <constraints nullable="false" foreignKeyName="fk_users_contact_data" references="contact_data(id)"/>
             </column>
-            <column name="address" type="int(11)">
-                <constraints nullable="false" foreignKeyName="fk_users_addresses" references="addresses(id)"/>
-            </column>
             <column name="user_role" type="ENUM('ADMIN', 'USER', 'COURIER', 'MANAGER')" defaultValue="USER">
                 <constraints nullable="false"/>
             </column>
@@ -75,11 +76,10 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="changeColumnNameInUserTable" author="smartPizza">
-        <renameColumn columnDataType="int(11)"
-                      newColumnName="address_id"
-                      oldColumnName="address"
-                      tableName="users"/>
+    <changeSet id="addConstrainAddressUser" author="rmanasyan">
+        <addForeignKeyConstraint baseTableName="addresses" baseColumnNames="user_id"
+                                 constraintName="fk_addresses_user"
+                                 referencedTableName="users" referencedColumnNames="id"/>
     </changeSet>
 
     <changeSet id="changeColumnNameInUserTable1" author="smartPizza">
@@ -99,15 +99,6 @@
                                  baseColumnNames="contact_data_id"
                                  constraintName="users_contact_data_fk"
                                  referencedTableName="contact_data"
-                                 referencedColumnNames="id"
-                                 onDelete="CASCADE"/>
-    </changeSet>
-
-    <changeSet id="addConstraintOnDelete2" author="manasyan">
-        <addForeignKeyConstraint baseTableName="users"
-                                 baseColumnNames="address_id"
-                                 constraintName="users_addresses_fk"
-                                 referencedTableName="addresses"
                                  referencedColumnNames="id"
                                  onDelete="CASCADE"/>
     </changeSet>
@@ -133,6 +124,7 @@
             </column>
         </createTable>
     </changeSet>
+
     <changeSet id="addPhoneOperatorCode" author="manasyan">
         <insert tableName="phone_operator_code">
             <column name="operator_code" value="41"/>

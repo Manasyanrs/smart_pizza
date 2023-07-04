@@ -705,13 +705,13 @@
                         <li><a href="/askbootstrap/preview/vegishop/review.html" class="text-dark">Review</a></li>
                     </ul>
                 </aside>
-                <aside class="col-md">
+                <aside th:if="${currentUser != null}" class="col-md">
                     <h6 class="title">My Account</h6>
                     <ul class="list-unstyled list-padding">
-                        <li><a class="text-dark" href="/askbootstrap/preview/vegishop/my_account.html"> My account</a>
+                        <li><a class="text-dark" href="/user/account"> My account</a>
                         </li>
                         <li><a class="text-dark" href="/askbootstrap/preview/vegishop/promos.html"> Promos</a></li>
-                        <li><a class="text-dark" href="/askbootstrap/preview/vegishop/my_address.html"> My address</a>
+                        <li><a class="text-dark" href="/templates/my_address.html"> My address</a>
                         </li>
                         <li><a class="text-dark" href="/askbootstrap/preview/vegishop/terms_conditions.html"> Terms
                             &amp; conditions</a></li>
@@ -764,78 +764,80 @@
         </div>
 
     </section>
-    <div class="modal fade right-modal" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header p-0">
-                    <nav class="schedule w-100">
-                        <div th:if="${currentUser == null}" class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-link active col-5 py-4" id="nav-home-tab" data-toggle="tab"
-                               href="home.html#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
-                                <p class="mb-0 font-weight-bold">Sign in</p>
-                            </a>
-                            <a class="nav-link col-5 py-4"
-                               href="/user/register"
-                               aria-selected="false">
-                                <p class="mb-0 font-weight-bold">Register</p>
-                            </a>
-                            <a class="nav-link col-2 p-0 d-flex align-items-center justify-content-center"
-                               data-dismiss="modal" aria-label="Close">
-                                <h1 class="m-0 h4 text-dark"><i class="icofont-close-line"></i></h1>
-                            </a>
-                        </div>
-                        <div th:unless="${currentUser == null}" class="nav nav-tabs">
-                            <a class="nav-link col-5 py-4"
-                               href="/logout"
-                               aria-selected="false">
-                                <p class="mb-0 font-weight-bold">Logout</p>
-                            </a>
-                            <a class="nav-link col-5 py-4"
-                               href="/"
-                               aria-selected="false">
-                                <p class="mb-0 font-weight-bold">Cancel</p>
-                            </a>
-                            <a class="nav-link col-2 p-0 d-flex align-items-center justify-content-center"
-                               data-dismiss="modal" aria-label="Close">
-                                <h1 class="m-0 h4 text-dark"><i class="icofont-close-line"></i></h1>
-                            </a>
-                        </div>
-                    </nav>
-                </div>
-                <div th:if="${currentUser == null}" class="modal-body p-0">
-                    <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-                             aria-labelledby="nav-home-tab">
-                            <div class="osahan-signin p-4 rounded">
-                                <div class="p-2">
-                                    <h2 class="my-0">Smart Pizza</h2>
-                                    <form method="post" action="/login">
+<!--    <div class="modal fade right-modal" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"-->
+<!--         aria-hidden="true">-->
+<!--        <div class="modal-dialog modal-dialog-centered">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header p-0">-->
+<!--                    <nav class="schedule w-100">-->
+<!--                        <div th:if="${currentUser == null}" class="nav nav-tabs" id="nav-tab" role="tablist">-->
+<!--                            <a class="nav-link active col-5 py-4" id="nav-home-tab" data-toggle="tab"-->
+<!--                               href="home.html#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">-->
+<!--                                <p class="mb-0 font-weight-bold">Sign in</p>-->
+<!--                            </a>-->
+<!--                            <a class="nav-link col-5 py-4"-->
+<!--                               href="/user/register"-->
+<!--                               aria-selected="false">-->
+<!--                                <p class="mb-0 font-weight-bold">Register</p>-->
+<!--                            </a>-->
+<!--                            <a class="nav-link col-2 p-0 d-flex align-items-center justify-content-center"-->
+<!--                               data-dismiss="modal" aria-label="Close">-->
+<!--                                <h1 class="m-0 h4 text-dark"><i class="icofont-close-line"></i></h1>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                        <div th:unless="${currentUser == null}" class="nav nav-tabs">-->
+<!--                            <a class="nav-link col-5 py-4"-->
+<!--                               href="/logout"-->
+<!--                               aria-selected="false">-->
+<!--                                <p class="mb-0 font-weight-bold">Logout</p>-->
+<!--                            </a>-->
+<!--                            <a class="nav-link col-5 py-4"-->
+<!--                               href="/"-->
+<!--                               aria-selected="false">-->
+<!--                                <p class="mb-0 font-weight-bold">Cancel</p>-->
+<!--                            </a>-->
+<!--                            <a class="nav-link col-2 p-0 d-flex align-items-center justify-content-center"-->
+<!--                               data-dismiss="modal" aria-label="Close">-->
+<!--                                <h1 class="m-0 h4 text-dark"><i class="icofont-close-line"></i></h1>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                    </nav>-->
+<!--                </div>-->
+<!--                <div th:if="${currentUser == null}" class="modal-body p-0">-->
+<!--                    <div class="tab-content" id="nav-tabContent">-->
+<!--                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"-->
+<!--                             aria-labelledby="nav-home-tab">-->
+<!--                            <div class="osahan-signin p-4 rounded">-->
+<!--                                <div class="p-2">-->
+<!--                                    <h2 class="my-0">Smart Pizza</h2>-->
+<!--                                    <form method="post" action="/login">-->
 
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Email</label>
-                                            <input placeholder="Enter Email" type="email" class="form-control"
-                                                   name="username"
-                                                   id="exampleInputEmail1" aria-describedby="emailHelp">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputPassword1">Password</label>
-                                            <input placeholder="Enter Password" type="password" class="form-control"
-                                                   name="password"
-                                                   id="exampleInputPassword1">
-                                        </div>
-                                        <button type="submit" class="btn btn-success btn-lg rounded btn-block">Sign in
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!--                                        <div class="form-group">-->
+<!--                                            <label for="exampleInputEmail1">Email</label>-->
+<!--                                            <input placeholder="Enter Email" type="email" class="form-control"-->
+<!--                                                   name="username"-->
+<!--                                                   id="exampleInputEmail1" aria-describedby="emailHelp">-->
+<!--                                        </div>-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label for="exampleInputPassword1">Password</label>-->
+<!--                                            <input placeholder="Enter Password" type="password" class="form-control"-->
+<!--                                                   name="password"-->
+<!--                                                   id="exampleInputPassword1">-->
+<!--                                        </div>-->
+<!--                                        <button type="submit" class="btn btn-success btn-lg rounded btn-block">Sign in-->
+<!--                                        </button>-->
+<!--                                    </form>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-            </div>
-        </div>
-    </div>
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+    <div th:insert="~{fragment/loginPanel::loginRegisterPanel}"></div>
+
 </footer>
 
 <script src="/askbootstrap/preview/vegishop/vendor/jquery/jquery.min.js"
