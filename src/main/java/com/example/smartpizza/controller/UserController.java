@@ -27,9 +27,11 @@ import java.util.UUID;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
+
     private final UserService userService;
     private final CodeOperatorService codeOperatorService;
     private final PasswordEncoder passwordEncoder;
+
 
     @GetMapping("/register")
     public String getRequestRegisterPage(ModelMap modelMap,
