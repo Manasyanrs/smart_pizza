@@ -20,14 +20,15 @@ public class LoadAndUploadImgServiceImpl implements LoadAndUploadImgService {
     private String defaultAvatar;
     @Override
     public String uploadImg(String path, MultipartFile multipartFile) throws IOException {
+        String imageName = null;
         if (multipartFile != null && !multipartFile.isEmpty()) {
             String uploadFileName = multipartFile.getOriginalFilename();
-            String avatarName = System.nanoTime() + "_" + uploadFileName;
+            imageName = System.nanoTime() + "_" + uploadFileName;
 
-            Path fileNameAndPath = Paths.get(path, avatarName);
+            Path fileNameAndPath = Paths.get(path, imageName);
             Files.write(fileNameAndPath, multipartFile.getBytes());
         }
-        return multipartFile.getOriginalFilename();
+        return imageName;
     }
 
     @Override
