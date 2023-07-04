@@ -25,4 +25,6 @@ public class Address {
     private String street;
     @NotEmpty(message = "Apartment number should not be empty!")
     private String apartmentNumber;
+    @ManyToOne
+    private User user;
 }

@@ -23,4 +23,9 @@ public class ContactDataServiceImpl implements ContactDataService {
     public Optional<ContactData> findUserEmail(String email) {
         return contactDataRepository.findByEmail(email);
     }
+
+    @Override
+    public ContactData getDataById(int id) {
+        return contactDataRepository.findById(id).get();
+    }
 }

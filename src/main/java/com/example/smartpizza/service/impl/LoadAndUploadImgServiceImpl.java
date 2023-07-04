@@ -31,8 +31,9 @@ public class LoadAndUploadImgServiceImpl implements LoadAndUploadImgService {
 
             Path fileNameAndPath = Paths.get(path, avatarName);
             Files.write(fileNameAndPath, multipartFile.getBytes());
+            return avatarName;
         }
-        return multipartFile.getOriginalFilename();
+        return null;
     }
 
     @Override
