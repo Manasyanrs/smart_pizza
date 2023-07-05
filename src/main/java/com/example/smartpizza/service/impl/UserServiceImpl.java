@@ -5,12 +5,11 @@ import com.example.smartpizza.entity.userEntity.ContactData;
 import com.example.smartpizza.entity.userEntity.User;
 import com.example.smartpizza.entity.userEntity.UserRole;
 import com.example.smartpizza.repository.UserRepository;
+import com.example.smartpizza.security.CurrentUser;
 import com.example.smartpizza.service.*;
 import com.example.smartpizza.utils.CurrentDirectory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -97,11 +96,14 @@ public class UserServiceImpl implements UserService {
                 contactData.setPhoneNumber(phone);
                 contactDataService.save(contactData);
                 user.get().setContactData(contactData);
-                userRepository.save(user.get());
-                Authentication authentication =
-                        new UsernamePasswordAuthenticationToken(user.get().getContactData().getEmail(), user.get().getPassword());
-                SecurityContextHolder.getContext().setAuthentication(authentication);
 
+                Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                CurrentUser principal1 = (CurrentUser) principal;
+                principal1.getUser().setName(name);
+                principal1.getUser().setSurname(surname);
+                principal1.getUser().getContactData().setPhoneNumber(phone);
+                principal1.getUser().setContactData(contactData);
+                userRepository.save(user.get());
                 return "ok";
             }
 

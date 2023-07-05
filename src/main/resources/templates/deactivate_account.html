@@ -74,7 +74,7 @@
             <div class="col-lg-4">
                 <div class="osahan-account bg-white rounded shadow-sm overflow-hidden">
                     <div class="p-4 profile text-center border-bottom">
-                        <img th:src="@{/getUserImage(imageName=${currentUser.getAvatar()})}"
+                        <img th:src="@{/get_user_image(imageName=${currentUser.getAvatar()})}"
                              class="img-fluid rounded-pill">
                         <h6 class="font-weight-bold m-0 mt-2"
                             th:text="${currentUser.getName() + ' ' + currentUser.getSurname()}"></h6>

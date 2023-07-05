@@ -31,9 +31,7 @@
                 </a>
 
                 <div th:if="${currentUser != null}" class="dropdown mr-3" style="margin-left: 20px">
-                    <a href="product_details.html#" class="dropdown-toggle text-dark" id="dropdownMenuButton"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img th:src="@{/getUserImage(imageName=${currentUser.getAvatar()})}" class="img-fluid rounded-circle header-user mr-2">
+                        <img th:src="@{/get_user_image(imageName=${currentUser.getAvatar()})}" class="img-fluid rounded-circle header-user mr-2">
                         <span th:text="' Hi ' + ${currentUser.getName()}"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right top-profile-drop" aria-labelledby="dropdownMenuButton">
@@ -129,9 +127,6 @@
                     </li>
                 </ul>
                 <div class="list-unstyled form-inline mb-0 ml-auto">
-                    <a href="/askbootstrap/preview/vegishop/picks_today.html" class="text-white px-3 py-2">Trending</a>
-                    <a  href="/askbootstrap/preview/vegishop/promos.html" class="text-white bg-offer px-3 py-2"><i
-                            class="icofont-sale-discount h6"></i>Promos</a>
                     <a href="/templates/picks_today.html" class="text-white px-3 py-2">Trending</a>
                     <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('MANAGER')}" href="/manager/addProduct" class="text-white bg-offer px-3 py-2"><i
                             class="icofont-sale-discount h6"></i>ADD PRODUCT</a>

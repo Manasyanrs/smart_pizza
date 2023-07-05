@@ -5,6 +5,7 @@ import com.example.smartpizza.entity.productEntity.ProductType;
 import com.example.smartpizza.repository.ProductRepository;
 import com.example.smartpizza.service.LoadAndUploadImgService;
 import com.example.smartpizza.service.ProductsService;
+import com.example.smartpizza.utils.CurrentDirectory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,7 @@ public class ProductsServiceImpl implements ProductsService {
     private String imageUploadPath;
     private final LoadAndUploadImgService loadAndUploadImgService;
     private final ProductRepository productRepository;
+    private final CurrentDirectory currentDirectory;
 
 
     @Override
@@ -43,7 +45,7 @@ public class ProductsServiceImpl implements ProductsService {
 
     @Override
     public Product save(Product product, MultipartFile multipartFile) throws IOException {
-        String productImageName = loadAndUploadImgService.uploadImg(imageUploadPath, multipartFile);
+        String productImageName = loadAndUploadImgService.uploadImg(currentDirectory.getCurrentDirectory() + imageUploadPath, multipartFile);
         product.setProductImg(productImageName);
         return productRepository.save(product);
     }

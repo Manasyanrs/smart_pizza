@@ -6,6 +6,7 @@ import com.example.smartpizza.entity.userEntity.UserRole;
 import com.example.smartpizza.security.CurrentUser;
 import com.example.smartpizza.service.LoadAndUploadImgService;
 import com.example.smartpizza.service.ProductsService;
+import com.example.smartpizza.utils.CurrentDirectory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -15,6 +16,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.io.IOException;
 
 @Controller
@@ -24,18 +26,22 @@ public class MainController {
     @Value("${products.images.path}")
     String productImgPath;
 
+    @Value("${smartPizza.users.avatar.path}")
+    private String userImgPath;
+
     private final ProductsService productsService;
+    private final CurrentDirectory currentDirectory;
 
     @GetMapping("/")
     public String getHomePage(ModelMap modelMap) {
         ProductType[] values = ProductType.values();
         modelMap.addAttribute("productTypes", values);
-        modelMap.addAttribute("fastFood",productsService.searchProductByProductType("FAST_FOOD"));
-        modelMap.addAttribute("randomProducts",productsService.takeRandomProducts());
+        modelMap.addAttribute("fastFood", productsService.searchProductByProductType("FAST_FOOD"));
+        modelMap.addAttribute("randomProducts", productsService.takeRandomProducts());
         return "home";
     }
 
-    @GetMapping("/customSuccessLogin")
+    @GetMapping("/custom_success_login")
     public String customSuccessLogin(@AuthenticationPrincipal CurrentUser currentUser) {
 
         if (currentUser != null) {
@@ -53,12 +59,14 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping(value = "/getImage",
-            produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "/getImage", produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getImage(@RequestParam("imageName") String imgName) throws IOException {
-        return loadAndUploadImgService.getBytes(productImgPath, imgName);
+        return loadAndUploadImgService.getBytes(currentDirectory.getCurrentDirectory() + productImgPath, imgName);
     }
 
-
+    @GetMapping(value = "/get_user_image", produces = MediaType.IMAGE_JPEG_VALUE)
+    public @ResponseBody byte[] getUserImage(@RequestParam("imageName") String imgName) throws IOException {
+        return loadAndUploadImgService.getBytes(currentDirectory.getCurrentDirectory() + userImgPath, imgName);
+    }
 
 }

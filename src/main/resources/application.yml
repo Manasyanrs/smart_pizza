@@ -7,6 +7,18 @@ spring:
   jpa:
     open-in-view: false
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: manasyanjavatestforme@gmail.com
+    password: bnbtmwpkhgtaqzau
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
   servlet:
     multipart:
       file-size-threshold: 10MB
@@ -26,6 +38,9 @@ smartPizza:
       avatars:
         path: "/src/main/resources/static/userDefaultAvatar/no-profile-picture-icon.png"
 
+products:
+  images:
+    path: "/src/main/resources/static/productImages/"
 
 application:
   url: http://localhost:8080
