@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
+@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,10 +19,10 @@ public class Product {
     private String name;
     private String description;
     private double price;
-    private int quantity;
     private double volume;
+    @Column(name = "product_image")
     private String productImg;
-
     @Enumerated(EnumType.STRING)
+    @Column(name = "product_type")
     private ProductType productType;
 }

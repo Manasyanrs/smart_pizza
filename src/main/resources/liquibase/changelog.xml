@@ -163,4 +163,39 @@
             <column name="operator_code" value="99"/>
         </insert>
     </changeSet>
+    <changeSet id="createTableProducts" author="smartPizza">
+        <createTable tableName="products">
+            <column autoIncrement="true" name="id" type="int(11)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="volume" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_image" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_type" type="ENUM('DESSERT','FAST_FOOD','DRINK','BEER','WINE','PIZZA',
+            'SALAD','BREAD','SEAFOOD')" >
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Raf" id="drop_column_quantity">
+        <dropColumn tableName="products" columnName="quantity" />
+    </changeSet>
+
+
+
 </databaseChangeLog>

@@ -132,6 +132,9 @@
                     <a href="/askbootstrap/preview/vegishop/picks_today.html" class="text-white px-3 py-2">Trending</a>
                     <a  href="/askbootstrap/preview/vegishop/promos.html" class="text-white bg-offer px-3 py-2"><i
                             class="icofont-sale-discount h6"></i>Promos</a>
+                    <a href="/templates/picks_today.html" class="text-white px-3 py-2">Trending</a>
+                    <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('MANAGER')}" href="/manager/addProduct" class="text-white bg-offer px-3 py-2"><i
+                            class="icofont-sale-discount h6"></i>ADD PRODUCT</a>
                 </div>
             </div>
         </div>
