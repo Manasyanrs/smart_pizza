@@ -8,6 +8,4 @@ public interface ContactDataService {
     ContactData save(ContactData contactData);
 
     Optional<ContactData> findUserEmail(String email);
-
-    ContactData getDataById(int id);
 }

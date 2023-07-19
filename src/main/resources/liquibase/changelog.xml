@@ -1,6 +1,7 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
     <property name="now" value="now()" dbms="mysql"/>
 
@@ -24,9 +25,6 @@
             <column name="apartment_number" type="VARCHAR(25)">
                 <constraints nullable="false"/>
             </column>
-            <column name="user_id" type="int(11)">
-                <constraints nullable="true"/>
-            </column>
         </createTable>
     </changeSet>
 
@@ -43,7 +41,6 @@
             </column>
         </createTable>
     </changeSet>
-
     <changeSet id="createTableUsers" author="smartPizza">
         <createTable tableName="users">
             <column autoIncrement="true" name="id" type="int(11)">
@@ -67,6 +64,9 @@
             <column name="contact_data_id" type="int(11)">
                 <constraints nullable="false" foreignKeyName="fk_users_contact_data" references="contact_data(id)"/>
             </column>
+            <column name="address" type="int(11)">
+                <constraints nullable="false" foreignKeyName="fk_users_addresses" references="addresses(id)"/>
+            </column>
             <column name="user_role" type="ENUM('ADMIN', 'USER', 'COURIER', 'MANAGER')" defaultValue="USER">
                 <constraints nullable="false"/>
             </column>
@@ -76,10 +76,11 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="addConstrainAddressUser" author="rmanasyan">
-        <addForeignKeyConstraint baseTableName="addresses" baseColumnNames="user_id"
-                                 constraintName="fk_addresses_user"
-                                 referencedTableName="users" referencedColumnNames="id"/>
+    <changeSet id="changeColumnNameInUserTable" author="smartPizza">
+        <renameColumn columnDataType="int(11)"
+                      newColumnName="address_id"
+                      oldColumnName="address"
+                      tableName="users"/>
     </changeSet>
 
     <changeSet id="changeColumnNameInUserTable1" author="smartPizza">
@@ -90,79 +91,6 @@
                       tableName="users"/>
     </changeSet>
 
-    <changeSet id="dropColumnCountryInAddressesTable" author="manasyan">
-        <dropColumn tableName="addresses" columnName="country"/>
-    </changeSet>
-
-    <changeSet id="addConstraintOnDelete1" author="manasyan">
-        <addForeignKeyConstraint baseTableName="users"
-                                 baseColumnNames="contact_data_id"
-                                 constraintName="users_contact_data_fk"
-                                 referencedTableName="contact_data"
-                                 referencedColumnNames="id"
-                                 onDelete="CASCADE"/>
-    </changeSet>
-
-    <changeSet id="addColumnEnabledInTableUsers" author="manasyan">
-        <addColumn tableName="users">
-            <column name="enabled" type="boolean" defaultValue="false">
-                <constraints nullable="false"/>
-            </column>
-            <column name="token" type="varchar(255)" defaultValue="null">
-                <constraints nullable="true"/>
-            </column>
-        </addColumn>
-    </changeSet>
-
-    <changeSet id="addTableForPhoneOperatorCode" author="manasyan">
-        <createTable tableName="phone_operator_code">
-            <column autoIncrement="true" name="id" type="int(11)">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="operator_code" type="int(11)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-
-    <changeSet id="addPhoneOperatorCode" author="manasyan">
-        <insert tableName="phone_operator_code">
-            <column name="operator_code" value="41"/>
-        </insert>
-        <insert tableName="phone_operator_code">
-            <column name="operator_code" value="43"/>
-        </insert>
-        <insert tableName="phone_operator_code">
-            <column name="operator_code" value="49"/>
-        </insert>
-        <insert tableName="phone_operator_code">
-            <column name="operator_code" value="55"/>
-        </insert>
-        <insert tableName="phone_operator_code">
-            <column name="operator_code" value="77"/>
-        </insert>
-        <insert tableName="phone_operator_code">
-            <column name="operator_code" value="91"/>
-        </insert>
-        <insert tableName="phone_operator_code">
-            <column name="operator_code" value="93"/>
-        </insert>
-        <insert tableName="phone_operator_code">
-            <column name="operator_code" value="94"/>
-        </insert>
-        <insert tableName="phone_operator_code">
-            <column name="operator_code" value="95"/>
-        </insert>
-        <insert tableName="phone_operator_code">
-            <column name="operator_code" value="96"/>
-        </insert>
-        <insert tableName="phone_operator_code">
-            <column name="operator_code" value="98"/>
-        </insert>
-        <insert tableName="phone_operator_code">
-            <column name="operator_code" value="99"/>
-        </insert>
-    </changeSet>
     <changeSet id="createTableProducts" author="smartPizza">
         <createTable tableName="products">
             <column autoIncrement="true" name="id" type="int(11)">

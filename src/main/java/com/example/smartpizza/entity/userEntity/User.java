@@ -40,11 +40,11 @@ public class User {
     private final Date registrationDate = new Date();
     @OneToOne
     private ContactData contactData;
+    @ManyToOne
+    private Address address;
 
     @Enumerated(value = EnumType.STRING)
     private UserRole userRole;
     @Column(name = "profile_img")
     private String avatar;
-    private boolean enabled;
-    private String token;
 }
