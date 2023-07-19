@@ -187,15 +187,75 @@
                 <constraints nullable="false"/>
             </column>
             <column name="product_type" type="ENUM('DESSERT','FAST_FOOD','DRINK','BEER','WINE','PIZZA',
-            'SALAD','BREAD','SEAFOOD')" >
+            'SALAD','BREAD','SEAFOOD')">
                 <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
     <changeSet author="Raf" id="drop_column_quantity">
-        <dropColumn tableName="products" columnName="quantity" />
+        <dropColumn tableName="products" columnName="quantity"/>
     </changeSet>
 
+    <changeSet id="createTableCarts" author="manasyan">
+        <createTable tableName="carts">
+            <column autoIncrement="true" name="id" type="int(11)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="user_id" type="int(11)">
+                <constraints nullable="false" foreignKeyName="fk_cart_user" references="users(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="createTableOrders" author="manasyan">
+        <createTable tableName="orders">
+            <column autoIncrement="true" name="id" type="int(11)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="user_id" type="int(11)">
+                <constraints nullable="false" foreignKeyName="fk_order_user" references="users(id)"/>
+            </column>
+            <column name="date_time" type="datetime" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="createTableCartProduct" author="manasyan">
+        <createTable tableName="cart_products">
+            <column name="cart_id" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add_pk_to_carts_products" author="rmanasyan">
+        <addPrimaryKey columnNames="cart_id, product_id"
+                       tableName="cart_products"
+                       constraintName="carts_products_pk"/>
+    </changeSet>
+
+    <changeSet id="createTableOrderProduct" author="manasyan">
+        <createTable tableName="orders_products">
+            <column name="order_id" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add_pk_to_orders_products" author="rmanasyan">
+        <addPrimaryKey columnNames="order_id, product_id"
+                       tableName="orders_products"
+                       constraintName="orders_products_pk"/>
+    </changeSet>
 
 
 </databaseChangeLog>
