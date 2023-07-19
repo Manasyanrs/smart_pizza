@@ -1,37 +1,31 @@
 package com.example.smartpizza.controller;
 
-import com.example.smartpizza.entity.productEntity.ProductType;
 import com.example.smartpizza.entity.userEntity.User;
 import com.example.smartpizza.entity.userEntity.UserRole;
 import com.example.smartpizza.security.CurrentUser;
 import com.example.smartpizza.service.LoadAndUploadImgService;
-import com.example.smartpizza.service.ProductsService;
+import com.example.smartpizza.utils.CurrentDirectory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
-public class MainController {
+public class Main {
     private final LoadAndUploadImgService loadAndUploadImgService;
-    @Value("${products.images.path}")
-    String productImgPath;
-
-    private final ProductsService productsService;
+    private final CurrentDirectory currentDirectory;
+    @Value("${smartPizza.users.avatar.path}")
+    private String imgPath;
 
     @GetMapping("/")
-    public String getHomePage(ModelMap modelMap) {
-        ProductType[] values = ProductType.values();
-        modelMap.addAttribute("productTypes", values);
-        modelMap.addAttribute("fastFood",productsService.searchProductByProductType("FAST_FOOD"));
-        modelMap.addAttribute("randomProducts",productsService.takeRandomProducts());
+    public String getHomePage() {
         return "home";
     }
 
@@ -47,18 +41,17 @@ public class MainController {
             } else if (user.getUserRole() == UserRole.COURIER) {
                 return "redirect:/currier";
             } else if (user.getUserRole() == UserRole.MANAGER) {
-                return "redirect:/manager/addProduct";
+                return "redirect:/manager";
             }
         }
         return "redirect:/";
     }
 
-    @GetMapping(value = "/getImage",
+    @GetMapping(value = "/getUserImage",
             produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getImage(@RequestParam("imageName") String imgName) throws IOException {
-        return loadAndUploadImgService.getBytes(productImgPath, imgName);
+        String imgAbsolutePath = currentDirectory.getCurrentDirectory() + imgPath;
+        return loadAndUploadImgService.getBytes(imgAbsolutePath, imgName);
     }
-
-
 
 }
