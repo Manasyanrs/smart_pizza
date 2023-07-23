@@ -1,12 +1,8 @@
 package com.example.smartpizza.service;
 
 import com.example.smartpizza.entity.productEntity.Product;
-import com.example.smartpizza.entity.productEntity.ProductType;
-import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
-import java.util.Optional;
 
 
 public interface ProductsService {
@@ -17,9 +13,11 @@ public interface ProductsService {
 
     List<Product> searchProductByProductType(String productType);
 
+
     Product searchProductById(int id);
 
     List<Product> takeRandomProducts();
+    List<Product> randomProduct();
 
-    Page<Product> createPageable(Optional<Integer> size, Optional<Integer> page, ProductType productType);
+
 }

@@ -14,10 +14,13 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    @Query(value = "SELECT * from products where product_type != 'FAST_FOOD'order by rand() limit 12",nativeQuery = true)
+    @Query(value = "SELECT * from products where product_type != 'FAST_FOOD'order by rand() limit 8",nativeQuery = true)
     List<Product> takeRandomProduct();
+    @Query(value = "SELECT * from products order by rand() limit 9",nativeQuery = true)
+    List<Product> randomProduct();
 
     List<Product> findProductsByProductType(ProductType productType);
+
 
     Product findProductsById(int id);
 

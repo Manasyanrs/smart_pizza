@@ -5,7 +5,7 @@
 <div th:fragment="headerFragment">
     <div class="bg-white shadow-sm osahan-main-nav">
         <nav class="navbar navbar-expand-lg navbar-light bg-white osahan-header py-0 container">
-            <a class="navbar-brand mr-0" href="/"><img class="img-fluid logo-img "
+            <a class="navbar-brand mr-0" href="/"> <img class="img-fluid logo-img "
                                                        src="/askbootstrap/preview/vegishop/img/logo.png"></a>
 
             <div class="ml-3 d-flex align-items-center">
@@ -57,7 +57,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="/askbootstrap/preview/vegishop/listing.html">Listing</a>
                             <a class="dropdown-item"
-                               href="/askbootstrap/preview/vegishop/product_details.html">Detail</a>
+                               href="/templates/product_details.html">Detail</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="/askbootstrap/preview/vegishop/picks_today.html">Trending</a>
                             <a class="dropdown-item"
@@ -128,8 +128,8 @@
                 </ul>
                 <div class="list-unstyled form-inline mb-0 ml-auto">
                     <a href="/templates/picks_today.html" class="text-white px-3 py-2">Trending</a>
-                    <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('MANAGER')}" href="/manager/addProduct" class="text-white bg-offer px-3 py-2"><i
-                            class="icofont-sale-discount h6"></i>ADD PRODUCT</a>
+                    <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('MANAGER')}" href="/manager" class="text-white bg-offer px-3 py-2"><i
+                            class="icofont-sale-discount h6"></i>MANAGER PAGE</a>
                 </div>
             </div>
         </div>

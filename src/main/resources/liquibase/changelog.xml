@@ -163,7 +163,8 @@
             <column name="operator_code" value="99"/>
         </insert>
     </changeSet>
-    <changeSet id="createTableProducts" author="smartPizza">
+
+    <changeSet id="createTableProducts" author="Grigoryan">
         <createTable tableName="products">
             <column autoIncrement="true" name="id" type="int(11)">
                 <constraints nullable="false" primaryKey="true"/>

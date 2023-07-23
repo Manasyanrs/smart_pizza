@@ -66,4 +66,8 @@ public class ProductsServiceImpl implements ProductsService {
         return productRepository.findProductsById(id);
     }
 
+    @Override
+    public List<Product> randomProduct() {
+        return productRepository.randomProduct();
+    }
 }

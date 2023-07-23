@@ -36,7 +36,7 @@ public class MainController {
     public String getHomePage(ModelMap modelMap) {
         ProductType[] values = ProductType.values();
         modelMap.addAttribute("productTypes", values);
-        modelMap.addAttribute("fastFood", productsService.searchProductByProductType("FAST_FOOD"));
+        modelMap.addAttribute("fastFoodList", productsService.searchProductByProductType("FAST_FOOD"));
         modelMap.addAttribute("randomProducts", productsService.takeRandomProducts());
         return "home";
     }
@@ -53,13 +53,13 @@ public class MainController {
             } else if (user.getUserRole() == UserRole.COURIER) {
                 return "redirect:/currier";
             } else if (user.getUserRole() == UserRole.MANAGER) {
-                return "redirect:/manager/addProduct";
+                return "redirect:/manager";
             }
         }
         return "redirect:/";
     }
 
-    @GetMapping(value = "/getImage", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "/get_product_image", produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getImage(@RequestParam("imageName") String imgName) throws IOException {
         return loadAndUploadImgService.getBytes(currentDirectory.getCurrentDirectory() + productImgPath, imgName);
     }
