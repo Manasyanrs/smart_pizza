@@ -46,7 +46,7 @@
                             <div class="categories-slider">
                                 <div class="col-c" th:each="productType : ${productTypes}">
                                     <div class="bg-white shadow-sm rounded text-center my-2 px-2 py-3 c-it">
-                                        <a th:href="@{/product/get_product_by_type(productType=${productType})}">
+                                        <a th:href="@{/product/get_product_by_type/type={type}(type=${productType})}">
                                             <img src="/askbootstrap/preview/vegishop/img/categorie/8.svg"
                                                  class="img-fluid px-2 mx-auto">
                                             <h6 class="m-0 pt-2 text-muted text-center" th:text="${productType}"></h6>
@@ -89,6 +89,10 @@
                                                     <div class="d-flex align-items-center">
                                                         <h6 class="price m-0 text-success"
                                                             th:text="${randomProduct.price}"></h6>
+                                                        <a data-toggle="collapse" href="home.html#collapseExample1"
+                                                           role="button" aria-expanded="false"
+                                                           aria-controls="collapseExample1"
+                                                           class="btn btn-success btn-sm ml-auto">+</a>
                                                         <div class="collapse qty_show" id="collapseExample1">
                                                             <div>
 <span class="ml-auto" href="#">
