@@ -6,7 +6,7 @@
     <meta name="description" content>
     <meta name="author" content>
     <link rel="icon" type="image/png" href="/askbootstrap/preview/vegishop/img/logo.png">
-    <title>SMART PIZZA</title>
+    <title>Vegishop - Online Grocery Supermarket HTML Template</title>
 
     <link rel="stylesheet" type="text/css" href="/askbootstrap/preview/vegishop/vendor/slick/slick.min.css"/>
     <link rel="stylesheet" type="text/css" href="/askbootstrap/preview/vegishop/vendor/slick/slick-theme.min.css"/>
@@ -43,71 +43,64 @@
                     <div class="osahan-body">
 
                         <div class="pt-3 pb-2 rounded osahan-categories">
-                            <div class="d-flex align-items-center mb-2">
-                                <h5 class="m-0 text-white">SMART PIZZA</h5>
-                            </div>
-                            <div class="osahan-body">
-
-                                <div class="pt-3 pb-2 rounded osahan-categories">
-                                    <div class="categories-slider">
-                                        <div class="col-c" th:each="productType : ${productTypes}">
-                                            <div class="bg-white shadow-sm rounded text-center my-2 px-2 py-3 c-it">
-                                                <a th:href="@{/product/byProductType(type=${productType})}">
-                                                    <img src="/askbootstrap/preview/vegishop/img/categorie/1.svg"
-                                                         class="img-fluid px-2 mx-auto">
-                                                    <p class="m-0 pt-2 text-muted text-center"
-                                                       th:text="${productType}"></p></a>
-                                            </div>
-                                        </div>
+                            <div class="categories-slider">
+                                <div class="col-c" th:each="productType : ${productTypes}">
+                                    <div class="bg-white shadow-sm rounded text-center my-2 px-2 py-3 c-it">
+                                        <a th:href="@{/product/get_product_by_type/type={type}(type=${productType})}">
+                                            <img src="/askbootstrap/preview/vegishop/img/categorie/8.svg"
+                                                 class="img-fluid px-2 mx-auto">
+                                            <h6 class="m-0 pt-2 text-muted text-center" th:text="${productType}"></h6>
+                                        </a>
                                     </div>
                                 </div>
-
                             </div>
-
-                            <div class="py-3 osahan-promos">
-                                <div class="d-flex align-items-center mb-3">
-                                    <h5 class="m-0">FAST FOOD</h5>
-                                </div>
-                                <div class="promo-slider pb-0 mb-0">
-                                    <div class="osahan-slider-item mx-2" th:each="combo : ${fastFood}">
-                                        <a th:href="@{'/product/singlePage/id='+ ${combo.getId()} + 'type=' +${combo.getProductType().name()}}"><img
-                                                th:src="@{/getImage(imageName=(${combo.getProductImg()}))}"
-                                                class="img-fluid mx-auto rounded" alt="Responsive image"></a>
-                                    </div>
-
+                        </div>
+                        <div class="py-3 osahan-promos">
+                            <div class="d-flex align-items-center mb-3">
+                                <h5 class="m-0">FAST FOOD</h5>
+                                <a href="/askbootstrap/preview/vegishop/promos.html"
+                                   class="ml-auto btn btn-outline-success btn-sm">See more</a>
+                            </div>
+                            <div class="promo-slider pb-0 mb-0">
+                                <div class="osahan-slider-item mx-2" th:each="fastFood : ${fastFoodList}">
+                                    <a th:href="@{product/single_page/{id}(id=${fastFood.id})}" ><img th:src="@{/get_product_image(imageName=(${fastFood.getProductImg()}))}"
+                                            class="img-fluid mx-auto rounded" alt="Responsive image"></a>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="title d-flex align-items-center py-3">
-                                <h5 class="m-0">MENU</h5>
-                            </div>
+                        <div class="title d-flex align-items-center py-3">
+                            <h5 class="m-0">RECOMMENDED FOR YOU</h5>
+                            <a class="ml-auto btn btn-outline-success btn-sm"
+                               href="/askbootstrap/preview/vegishop/picks_today.html">See more</a>
+                        </div>
 
-                            <div class="pick_today">
-                                <div class="row">
-                                    <div class="col-6 col-md-3 mb-3" th:each="product : ${randomProducts}">
-                                        <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm" >
-                                            <div class="list-card-image">
-                                                <a th:href="@{'/product/singlePage/id='+ ${product.getId()} + 'type=' +${product.getProductType().name()}}"
-                                                   class="text-dark">
-                                                    <div class="p-3">
-                                                        <img th:src="@{/getImage(imageName=(${product.getProductImg()}))}"
-                                                             class="img-fluid item-img w-100 mb-3" width="100px" height="120px">
-                                                    </div>
-                                                    <h6 th:text="${product.name}"></h6>
+                        <div class="pick_today">
+                            <div class="row">
+                                <div class="col-6 col-md-3 mb-3" th:each="randomProduct : ${randomProducts}">
+                                    <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
+                                        <div class="list-card-image">
+                                            <a th:href="@{product/single_page/{id}(id=${randomProduct.id})}"
+                                               class="text-dark">
+                                                <div class="p-3">
+                                                    <img th:src="@{/get_product_image(imageName=(${randomProduct.getProductImg()}))}"
+                                                         class="img-fluid item-img w-100 mb-3">
+                                                    <h6 th:text="${randomProduct.name}"></h6>
                                                     <div class="d-flex align-items-center">
-                                                        <h6 class="price m-0 text-success" th:text="${product.price}"></h6>
-                                                        <a data-toggle="collapse" href="home.html#collapseExample2"
+                                                        <h6 class="price m-0 text-success"
+                                                            th:text="${randomProduct.price}"></h6>
+                                                        <a data-toggle="collapse" href="home.html#collapseExample1"
                                                            role="button" aria-expanded="false"
-                                                           aria-controls="collapseExample2"
+                                                           aria-controls="collapseExample1"
                                                            class="btn btn-success btn-sm ml-auto">+</a>
-                                                        <div class="collapse qty_show" id="collapseExample2">
+                                                        <div class="collapse qty_show" id="collapseExample1">
                                                             <div>
 <span class="ml-auto" href="#">
-<form class="cart-items-number d-flex" method="POST" action="home.html#">
-<input type="button" value="-" class="qtyminus btn btn-success btn-sm" field="quantity"/>
-<input type="text" name="quantity" value="1" class="qty form-control"/>
-<input type="button" value="+" class="qtyplus btn btn-success btn-sm" field="quantity"/>
-</form>
+    <form class="cart-items-number d-flex" method="POST" action="home.html#">
+    <input type="button" value="-" class="qtyminus btn btn-success btn-sm" field="quantity"/>
+    <input type="text" name="quantity" value="1" class="qty form-control"/>
+    <input type="button" value="+" class="qtyplus btn btn-success btn-sm" field="quantity"/>
+    </form>
 </span>
                                                             </div>
                                                         </div>
@@ -117,81 +110,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6 col-md-3 mb-3">
-                                    <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
-                                        <div class="list-card-image">
-                                            <a href="/askbootstrap/preview/vegishop/product_details.html"
-                                               class="text-dark">
-                                                <div class="member-plan position-absolute"><span
-                                                        class="badge m-3 badge-success">10%</span></div>
-                                                <div class="p-3">
-                                                    <img src="/askbootstrap/preview/vegishop/img/listing/v5.jpg"
-                                                         class="img-fluid item-img w-100 mb-3">
-                                                    <h6>Cauliflower</h6>
-                                                    <div class="d-flex align-items-center">
-                                                        <h6 class="price m-0 text-success">$1.8/kg</h6>
-                                                        <a data-toggle="collapse" href="home.html#collapseExample3"
-                                                           role="button" aria-expanded="false"
-                                                           aria-controls="collapseExample3"
-                                                           class="btn btn-success btn-sm ml-auto">+</a>
-                                                        <div class="collapse qty_show" id="collapseExample3">
-                                                            <div>
-<span class="ml-auto" href="#">
-<form class="cart-items-number d-flex" method="POST" action="home.html#">
-<input type="button" value="-" class="qtyminus btn btn-success btn-sm" field="quantity"/>
-<input type="text" name="quantity" value="1" class="qty form-control"/>
-<input type="button" value="+" class="qtyplus btn btn-success btn-sm" field="quantity"/>
-</form>
-</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-3 mb-3">
-                                    <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
-                                        <div class="list-card-image">
-                                            <a href="/askbootstrap/preview/vegishop/product_details.html"
-                                               class="text-dark">
-                                                <div class="member-plan position-absolute"><span
-                                                        class="badge m-3 badge-success">10%</span></div>
-                                                <div class="p-3">
-                                                    <img src="/askbootstrap/preview/vegishop/img/listing/v6.jpg"
-                                                         class="img-fluid item-img w-100 mb-3">
-                                                    <h6>Carrot</h6>
-                                                    <div class="d-flex align-items-center">
-                                                        <h6 class="price m-0 text-success">$0.8/kg</h6>
-                                                        <a data-toggle="collapse" href="home.html#collapseExample4"
-                                                           role="button" aria-expanded="false"
-                                                           aria-controls="collapseExample4"
-                                                           class="btn btn-success btn-sm ml-auto">+</a>
-                                                        <div class="collapse qty_show" id="collapseExample4">
-                                                            <div>
-<span class="ml-auto" href="#">
-<form class="cart-items-number d-flex" method="POST" action="home.html#">
-<input type="button" value="-" class="qtyminus btn btn-success btn-sm" field="quantity"/>
-<input type="text" name="quantity" value="1" class="qty form-control"/>
-<input type="button" value="+" class="qtyplus btn btn-success btn-sm" field="quantity"/>
-</form>
-</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                            </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </section>
 
 <footer class="section-footer border-top bg-white">
@@ -243,7 +168,7 @@
                     <h6 class="title">Products</h6>
                     <ul class="list-unstyled list-padding">
                         <li><a href="/askbootstrap/preview/vegishop/listing.html" class="text-dark">Listing</a></li>
-                        <li><a href="/askbootstrap/preview/vegishop/product_details.html" class="text-dark">Detail</a>
+                        <li><a href="/templates/product_details.html" class="text-dark">Detail</a>
                         </li>
                         <li><a href="/askbootstrap/preview/vegishop/picks_today.html" class="text-dark">Trending</a>
                         </li>
@@ -278,13 +203,13 @@
                         <li><a href="/askbootstrap/preview/vegishop/review.html" class="text-dark">Review</a></li>
                     </ul>
                 </aside>
-                <aside th:if="${currentUser != null}" class="col-md">
+                <aside class="col-md">
                     <h6 class="title">My Account</h6>
                     <ul class="list-unstyled list-padding">
-                        <li><a class="text-dark" href="/user/account"> My account</a>
+                        <li><a class="text-dark" href="/askbootstrap/preview/vegishop/my_account.html"> My account</a>
                         </li>
                         <li><a class="text-dark" href="/askbootstrap/preview/vegishop/promos.html"> Promos</a></li>
-                        <li><a class="text-dark" href="/templates/my_address.html"> My address</a>
+                        <li><a class="text-dark" href="/askbootstrap/preview/vegishop/my_address.html"> My address</a>
                         </li>
                         <li><a class="text-dark" href="/askbootstrap/preview/vegishop/terms_conditions.html"> Terms
                             &amp; conditions</a></li>
@@ -298,7 +223,7 @@
                 <aside class="col-md">
                     <h6 class="title">Extra Pages</h6>
                     <ul class="list-unstyled list-padding">
-                        <li><a href="/templates/promo_details.html" class="text-dark"> Promo
+                        <li><a href="/askbootstrap/preview/vegishop/promo_details.html" class="text-dark"> Promo
                             Details </a></li>
                         <li><a href="/askbootstrap/preview/vegishop/terms_conditions.html" class="text-dark">
                             Conditions </a></li>
@@ -320,11 +245,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <span class="pr-2">© 2023 SMART PIZZA</span>
+                    <span class="pr-2">© 2021 Vegishop</span>
                     <span class="pr-2"><a href="/askbootstrap/preview/vegishop/privacy.html"
                                           class="text-dark">Privacy</a></span>
                     <span class="pr-2"><a href="terms&amp;conditions.html"
-                                          class="text-dark">ITSPACE TEAM</a></span>
+                                          class="text-dark">Terms & Conditions</a></span>
                 </div>
                 <div class="col-md-6 text-md-right">
                     <a href="https://askbootstrap.com/preview/vegishop/href"><img
@@ -337,80 +262,78 @@
         </div>
 
     </section>
-<!--    <div class="modal fade right-modal" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"-->
-<!--         aria-hidden="true">-->
-<!--        <div class="modal-dialog modal-dialog-centered">-->
-<!--            <div class="modal-content">-->
-<!--                <div class="modal-header p-0">-->
-<!--                    <nav class="schedule w-100">-->
-<!--                        <div th:if="${currentUser == null}" class="nav nav-tabs" id="nav-tab" role="tablist">-->
-<!--                            <a class="nav-link active col-5 py-4" id="nav-home-tab" data-toggle="tab"-->
-<!--                               href="home.html#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">-->
-<!--                                <p class="mb-0 font-weight-bold">Sign in</p>-->
-<!--                            </a>-->
-<!--                            <a class="nav-link col-5 py-4"-->
-<!--                               href="/user/register"-->
-<!--                               aria-selected="false">-->
-<!--                                <p class="mb-0 font-weight-bold">Register</p>-->
-<!--                            </a>-->
-<!--                            <a class="nav-link col-2 p-0 d-flex align-items-center justify-content-center"-->
-<!--                               data-dismiss="modal" aria-label="Close">-->
-<!--                                <h1 class="m-0 h4 text-dark"><i class="icofont-close-line"></i></h1>-->
-<!--                            </a>-->
-<!--                        </div>-->
-<!--                        <div th:unless="${currentUser == null}" class="nav nav-tabs">-->
-<!--                            <a class="nav-link col-5 py-4"-->
-<!--                               href="/logout"-->
-<!--                               aria-selected="false">-->
-<!--                                <p class="mb-0 font-weight-bold">Logout</p>-->
-<!--                            </a>-->
-<!--                            <a class="nav-link col-5 py-4"-->
-<!--                               href="/"-->
-<!--                               aria-selected="false">-->
-<!--                                <p class="mb-0 font-weight-bold">Cancel</p>-->
-<!--                            </a>-->
-<!--                            <a class="nav-link col-2 p-0 d-flex align-items-center justify-content-center"-->
-<!--                               data-dismiss="modal" aria-label="Close">-->
-<!--                                <h1 class="m-0 h4 text-dark"><i class="icofont-close-line"></i></h1>-->
-<!--                            </a>-->
-<!--                        </div>-->
-<!--                    </nav>-->
-<!--                </div>-->
-<!--                <div th:if="${currentUser == null}" class="modal-body p-0">-->
-<!--                    <div class="tab-content" id="nav-tabContent">-->
-<!--                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"-->
-<!--                             aria-labelledby="nav-home-tab">-->
-<!--                            <div class="osahan-signin p-4 rounded">-->
-<!--                                <div class="p-2">-->
-<!--                                    <h2 class="my-0">Smart Pizza</h2>-->
-<!--                                    <form method="post" action="/login">-->
+    <div class="modal fade right-modal" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header p-0">
+                    <nav class="schedule w-100">
+                        <div th:if="${currentUser == null}" class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-link active col-5 py-4" id="nav-home-tab" data-toggle="tab"
+                               href="home.html#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
+                                <p class="mb-0 font-weight-bold">Sign in</p>
+                            </a>
+                            <a class="nav-link col-5 py-4"
+                               href="/user/register"
+                               aria-selected="false">
+                                <p class="mb-0 font-weight-bold">Register</p>
+                            </a>
+                            <a class="nav-link col-2 p-0 d-flex align-items-center justify-content-center"
+                               data-dismiss="modal" aria-label="Close">
+                                <h1 class="m-0 h4 text-dark"><i class="icofont-close-line"></i></h1>
+                            </a>
+                        </div>
+                        <div th:unless="${currentUser == null}" class="nav nav-tabs">
+                            <a class="nav-link col-5 py-4"
+                               href="/logout"
+                               aria-selected="false">
+                                <p class="mb-0 font-weight-bold">Logout</p>
+                            </a>
+                            <a class="nav-link col-5 py-4"
+                               href="/"
+                               aria-selected="false">
+                                <p class="mb-0 font-weight-bold">Cancel</p>
+                            </a>
+                            <a class="nav-link col-2 p-0 d-flex align-items-center justify-content-center"
+                               data-dismiss="modal" aria-label="Close">
+                                <h1 class="m-0 h4 text-dark"><i class="icofont-close-line"></i></h1>
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+                <div th:if="${currentUser == null}" class="modal-body p-0">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                             aria-labelledby="nav-home-tab">
+                            <div class="osahan-signin p-4 rounded">
+                                <div class="p-2">
+                                    <h2 class="my-0">Smart Pizza</h2>
+                                    <form method="post" action="/login">
 
-<!--                                        <div class="form-group">-->
-<!--                                            <label for="exampleInputEmail1">Email</label>-->
-<!--                                            <input placeholder="Enter Email" type="email" class="form-control"-->
-<!--                                                   name="username"-->
-<!--                                                   id="exampleInputEmail1" aria-describedby="emailHelp">-->
-<!--                                        </div>-->
-<!--                                        <div class="form-group">-->
-<!--                                            <label for="exampleInputPassword1">Password</label>-->
-<!--                                            <input placeholder="Enter Password" type="password" class="form-control"-->
-<!--                                                   name="password"-->
-<!--                                                   id="exampleInputPassword1">-->
-<!--                                        </div>-->
-<!--                                        <button type="submit" class="btn btn-success btn-lg rounded btn-block">Sign in-->
-<!--                                        </button>-->
-<!--                                    </form>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Email</label>
+                                            <input placeholder="Enter Email" type="email" class="form-control"
+                                                   name="username"
+                                                   id="exampleInputEmail1" aria-describedby="emailHelp">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1">Password</label>
+                                            <input placeholder="Enter Password" type="password" class="form-control"
+                                                   name="password"
+                                                   id="exampleInputPassword1">
+                                        </div>
+                                        <button type="submit" class="btn btn-success btn-lg rounded btn-block">Sign in
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-    <div th:insert="~{fragment/loginPanel::loginRegisterPanel}"></div>
-
+            </div>
+        </div>
+    </div>
 </footer>
 
 <script src="/askbootstrap/preview/vegishop/vendor/jquery/jquery.min.js"

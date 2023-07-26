@@ -18,6 +18,11 @@
     <link href="/askbootstrap/preview/vegishop/css/style.css" rel="stylesheet">
 
     <link href="/askbootstrap/preview/vegishop/vendor/sidebar/demo.css" rel="stylesheet">
+    <style>
+        .active{
+            color: red;
+        }
+    </style>
 </head>
 <body class="fixed-bottom-padding">
 <div th:insert="~{fragment/header::headerFragment}"></div>
@@ -29,40 +34,23 @@
                 <div class="osahan-listing">
                     <div class="d-flex align-items-center mb-3">
                         <h4 th:text="${productType}"></h4>
-                        <div class="m-0 text-center ml-auto">
-                            <a href="picks_today.html#" data-toggle="modal" data-target="#exampleModal"
-                               class="btn text-muted bg-white mr-2"><i class="icofont-filter mr-1"></i> Filter</a>
-                            <a href="picks_today.html#" data-toggle="modal" data-target="#exampleModal"
-                               class="btn text-muted bg-white"><i class="icofont-signal mr-1"></i> Sort</a>
-                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-6 col-md-3 mb-3" th:each="productByType : ${productsByType}">
+
+                        <div class="col-6 col-md-3 mb-3" th:each="product : ${products}">
                             <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
                                 <div class="list-card-image">
-                                    <a th:href="@{'/product/singlePage/id='+ ${productByType.getId()} + 'type=' +${productByType.getProductType().name()}}"
-                                       class="text-dark">
+                                    <a th:href="@{/product/single_page/{id}(id=${product.id})}" class="text-dark">
                                         <div class="p-3">
-                                            <img th:src="@{/getImage(imageName=(${productByType.getProductImg()}))}"
-                                                 class="img-fluid item-img w-100 mb-3">
-                                            <h6 th:text="${productByType.name}"></h6>
+                                            <img th:src="@{/get_product_image(imageName=(${product.getProductImg()}))}" class="img-fluid item-img w-100 mb-3">
+                                            <h6 th:text="${product.name}"></h6>
                                             <div class="d-flex align-items-center">
-                                                <h6 class="price m-0 text-success"
-                                                    th:text="${productByType.price}"></h6>
-                                                <a data-toggle="collapse" href="picks_today.html#collapseExample1"
-                                                   role="button" aria-expanded="false" aria-controls="collapseExample1"
-                                                   class="btn btn-success btn-sm ml-auto">+</a>
-                                                <div class="collapse qty_show" id="collapseExample1">
-                                                    <div>
-<span class="ml-auto" href="#">
-<form id="myform" class="cart-items-number d-flex" method="POST" action="picks_today.html#">
-<input type="button" value="-" class="qtyminus btn btn-success btn-sm" field="quantity"/>
-<input type="text" name="quantity" value="1" class="qty form-control"/>
-<input type="button" value="+" class="qtyplus btn btn-success btn-sm" field="quantity"/>
-</form>
-</span>
-                                                    </div>
-                                                </div>
+                                                <h6 class="price m-0 text-success" th:text="${product.price}"></h6>
+                                                    <form id="myform" class="cart-items-number d-flex" method="POST" action="picks_today.html#">
+                                                        <input type="button" value="-" class="qtyminus btn btn-success btn-sm" field="quantity" />
+                                                        <input type="text" name="quantity" value="1" class="qty form-control" />
+                                                        <input type="button" value="+" class="qtyplus btn btn-success btn-sm" field="quantity" />
+                                                    </form>
                                             </div>
                                         </div>
                                     </a>
@@ -70,217 +58,23 @@
                             </div>
                         </div>
                     </div>
+
+                    <div style="display: flex; justify-content: center; margin-top: 25px";>
+                        <div th:if="${products.totalPages > 0}"
+                             th:each="pageNumber : ${pageNumbers}">
+
+                            <a style="display: flex; margin-left: 10px"
+                               th:href="@{'/product/get_product_by_type/type='+${productType}(size=${products.size}, page=${pageNumber})}"
+                               th:text="${pageNumber}"
+                               th:class="${pageNumber==products.number + 1} ? active"></a>
+                        </div>
+                    </div>
                 </div>
-                </a>
             </div>
         </div>
     </div>
 </section>
-<nav id="main-nav">
-    <ul class="second-nav">
-        <li><a href="../../../../templates/home.html"><i class="icofont-smart-phone mr-2"></i> Home</a></li>
-        <li>
-            <a href="picks_today.html#"><i class="icofont-login mr-2"></i> Authentication</a>
-            <ul>
-                <li><a class="dropdown-item" href="../../../../templates/signin.html">Sign In</a></li>
-                <li><a class="dropdown-item" href="../../../../templates/signup.html">Sign Up</a></li>
-                <li><a href="verification.html">Verification</a></li>
-            </ul>
-        </li>
-        <li><a class="dropdown-item" href="listing.html">Listing</a></li>
-        <li><a class="dropdown-item" href="product_details.html">Detail</a></li>
-        <li><a class="dropdown-item" href="picks_today.html">Trending</a></li>
-        <li><a class="dropdown-item" href="recommend.html">Recommended</a></li>
-        <li><a class="dropdown-item" href="fresh_vegan.html">Most Popular</a></li>
-        <li><a class="dropdown-item" href="cart.html">Cart</a></li>
-        <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
-        <li><a class="dropdown-item" href="successful.html">Successful</a></li>
-        <li>
-            <a href="picks_today.html#"><i class="icofont-sub-listing mr-2"></i> My Order</a>
-            <ul>
-                <li><a class="dropdown-item" href="my_order.html">My order</a></li>
-                <li><a class="dropdown-item" href="status_complete.html">Status Complete</a></li>
-                <li><a class="dropdown-item" href="status_onprocess.html">Status on Process</a></li>
-                <li><a class="dropdown-item" href="status_canceled.html">Status Canceled</a></li>
-                <li><a class="dropdown-item" href="review.html">Review</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="picks_today.html#"><i class="icofont-ui-user mr-2"></i> My Account</a>
-            <ul>
-                <li><a class="dropdown-item" href="../../../../templates/userAccount.html">My account</a></li>
-                <li><a class="dropdown-item" href="promos.html">Promos</a></li>
-                <li><a class="dropdown-item" href="../../../../templates/my_address.html">My address</a></li>
-                <li><a class="dropdown-item" href="terms_conditions.html">Terms & conditions</a></li>
-                <li><a class="dropdown-item" href="help_support.html">Help & support</a></li>
-                <li><a class="dropdown-item" href="help_ticket.html">Help ticket</a></li>
-                <li><a class="dropdown-item" href="../../../../templates/signin.html">Logout</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="picks_today.html#"><i class="icofont-page mr-2"></i> Pages</a>
-            <ul>
-                <li><a class="dropdown-item" href="verification.html">Verification</a></li>
-                <li><a class="dropdown-item" href="promos.html">Promos</a></li>
-                <li><a class="dropdown-item" href="promo_details.html">Promo Details</a></li>
-                <li><a class="dropdown-item" href="terms_conditions.html">Terms & Conditions</a></li>
-                <li><a class="dropdown-item" href="privacy.html">Privacy</a></li>
-                <li><a class="dropdown-item" href="terms&amp;conditions.html">Conditions</a></li>
-                <li><a class="dropdown-item" href="help_support.html">Help Support</a></li>
-                <li><a class="dropdown-item" href="help_ticket.html">Help Ticket</a></li>
-                <li><a class="dropdown-item" href="refund_payment.html">Refund Payment</a></li>
-                <li><a class="dropdown-item" href="faq.html">FAQ</a></li>
-                <li><a class="dropdown-item" href="../../../../templates/signin.html">Sign In</a></li>
-                <li><a class="dropdown-item" href="../../../../templates/signup.html">Sign Up</a></li>
-                <li><a class="dropdown-item" href="search.html">Search</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="picks_today.html#"><i class="icofont-link mr-2"></i> Navigation Link Example</a>
-            <ul>
-                <li>
-                    <a href="picks_today.html#">Link Example 1</a>
-                    <ul>
-                        <li>
-                            <a href="picks_today.html#">Link Example 1.1</a>
-                            <ul>
-                                <li><a href="picks_today.html#">Link</a></li>
-                                <li><a href="picks_today.html#">Link</a></li>
-                                <li><a href="picks_today.html#">Link</a></li>
-                                <li><a href="picks_today.html#">Link</a></li>
-                                <li><a href="picks_today.html#">Link</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="picks_today.html#">Link Example 1.2</a>
-                            <ul>
-                                <li><a href="picks_today.html#">Link</a></li>
-                                <li><a href="picks_today.html#">Link</a></li>
-                                <li><a href="picks_today.html#">Link</a></li>
-                                <li><a href="picks_today.html#">Link</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="picks_today.html#">Link Example 2</a></li>
-                <li><a href="picks_today.html#">Link Example 3</a></li>
-                <li><a href="picks_today.html#">Link Example 4</a></li>
-                <li data-nav-custom-content>
-                    <div class="custom-message">
-                        You can add any custom content to your navigation items. This text is just an example.
-                    </div>
-                </li>
-            </ul>
-        </li>
-    </ul>
-    <ul class="bottom-nav">
-        <li class="email">
-            <a class="text-success" href="../../../../templates/home.html">
-                <p class="h5 m-0"><i class="icofont-home text-success"></i></p>
-                Home
-            </a>
-        </li>
-        <li class="github">
-            <a href="cart.html">
-                <p class="h5 m-0"><i class="icofont-cart"></i></p>
-                CART
-            </a>
-        </li>
-        <li class="ko-fi">
-            <a href="help_ticket.html">
-                <p class="h5 m-0"><i class="icofont-headphone"></i></p>
-                Help
-            </a>
-        </li>
-    </ul>
-</nav>
-<div class="modal fade right-modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Filter</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body p-0">
-                <div class="osahan-filter">
-                    <div class="filter">
 
-                        <div class="p-3 bg-light border-bottom">
-                            <h6 class="m-0">SORT BY</h6>
-                        </div>
-                        <div class="custom-control border-bottom px-0  custom-radio">
-                            <input type="radio" id="customRadio1" name="location" class="custom-control-input" checked>
-                            <label class="custom-control-label py-3 w-100 px-3" for="customRadio1">Top Rated</label>
-                        </div>
-                        <div class="custom-control border-bottom px-0  custom-radio">
-                            <input type="radio" id="customRadio2" name="location" class="custom-control-input">
-                            <label class="custom-control-label py-3 w-100 px-3" for="customRadio2">Nearest Me</label>
-                        </div>
-                        <div class="custom-control border-bottom px-0  custom-radio">
-                            <input type="radio" id="customRadio3" name="location" class="custom-control-input">
-                            <label class="custom-control-label py-3 w-100 px-3" for="customRadio3">Cost High to
-                                Low</label>
-                        </div>
-                        <div class="custom-control border-bottom px-0  custom-radio">
-                            <input type="radio" id="customRadio4" name="location" class="custom-control-input">
-                            <label class="custom-control-label py-3 w-100 px-3" for="customRadio4">Cost Low to
-                                High</label>
-                        </div>
-                        <div class="custom-control border-bottom px-0  custom-radio">
-                            <input type="radio" id="customRadio5" name="location" class="custom-control-input">
-                            <label class="custom-control-label py-3 w-100 px-3" for="customRadio5">Most Popular</label>
-                        </div>
-
-                        <div class="p-3 bg-light border-bottom">
-                            <h6 class="m-0">FILTER</h6>
-                        </div>
-                        <div class="custom-control border-bottom px-0  custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="defaultCheck1" checked>
-                            <label class="custom-control-label py-3 w-100 px-3" for="defaultCheck1">Open Now</label>
-                        </div>
-                        <div class="custom-control border-bottom px-0  custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="defaultCheck2">
-                            <label class="custom-control-label py-3 w-100 px-3" for="defaultCheck2">Credit Cards</label>
-                        </div>
-                        <div class="custom-control border-bottom px-0  custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="defaultCheck3">
-                            <label class="custom-control-label py-3 w-100 px-3" for="defaultCheck3">Alcohol
-                                Served</label>
-                        </div>
-
-                        <div class="p-3 bg-light border-bottom">
-                            <h6 class="m-0">ADDITIONAL FILTERS</h6>
-                        </div>
-                        <div class="px-3 pt-3">
-                            <input type="range" class="custom-range" min="0" max="100" name>
-                            <div class="form-row">
-                                <div class="form-group col-6">
-                                    <label>Min</label>
-                                    <input class="form-control" placeholder="$0" type="number">
-                                </div>
-                                <div class="form-group text-right col-6">
-                                    <label>Max</label>
-                                    <input class="form-control" placeholder="$1,0000" type="number">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer p-0 border-0">
-                <div class="col-6 m-0 p-0">
-                    <button type="button" class="btn border-top btn-lg btn-block" data-dismiss="modal">Close</button>
-                </div>
-                <div class="col-6 m-0 p-0">
-                    <button type="button" class="btn btn-success btn-lg btn-block">Apply</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <footer class="section-footer border-top bg-white">
     <section class="footer-top py-4">
@@ -330,44 +124,44 @@
                 <aside class="col-md">
                     <h6 class="title">Products</h6>
                     <ul class="list-unstyled list-padding">
-                        <li><a href="listing.html" class="text-dark">Listing</a></li>
-                        <li><a href="product_details.html" class="text-dark">Detail</a></li>
-                        <li><a href="picks_today.html" class="text-dark">Trending</a></li>
-                        <li><a href="recommend.html" class="text-dark">Recommended</a></li>
-                        <li><a href="fresh_vegan.html" class="text-dark">Most Popular</a></li>
+                        <li> <a href="listing.html" class="text-dark">Listing</a></li>
+                        <li> <a href="product_details.html" class="text-dark">Detail</a></li>
+                        <li> <a href="picks_today.html" class="text-dark">Trending</a></li>
+                        <li> <a href="recommend.html" class="text-dark">Recommended</a></li>
+                        <li> <a href="fresh_vegan.html" class="text-dark">Most Popular</a></li>
                     </ul>
                 </aside>
                 <aside class="col-md">
                     <h6 class="title">Checkout Process</h6>
                     <ul class="list-unstyled list-padding">
-                        <li><a href="cart.html" class="text-dark">Cart</a></li>
-                        <li><a href="cart.html" class="text-dark">Order Address</a></li>
-                        <li><a href="cart.html" class="text-dark">Delivery Time</a></li>
-                        <li><a href="cart.html" class="text-dark">Order Payment</a></li>
-                        <li><a href="checkout.html" class="text-dark">Checkout</a></li>
-                        <li><a href="successful.html" class="text-dark">Successful</a></li>
+                        <li> <a href="cart.html" class="text-dark">Cart</a></li>
+                        <li> <a href="cart.html" class="text-dark">Order Address</a></li>
+                        <li> <a href="cart.html" class="text-dark">Delivery Time</a></li>
+                        <li> <a href="cart.html" class="text-dark">Order Payment</a></li>
+                        <li> <a href="checkout.html" class="text-dark">Checkout</a></li>
+                        <li> <a href="successful.html" class="text-dark">Successful</a></li>
                     </ul>
                 </aside>
                 <aside class="col-md">
                     <h6 class="title">My Order</h6>
                     <ul class="list-unstyled list-padding">
-                        <li><a href="my_order.html" class="text-dark">My order</a></li>
-                        <li><a href="status_complete.html" class="text-dark">Status Complete</a></li>
-                        <li><a href="status_onprocess.html" class="text-dark">Status on Process</a></li>
-                        <li><a href="status_canceled.html" class="text-dark">Status Canceled</a></li>
-                        <li><a href="review.html" class="text-dark">Review</a></li>
+                        <li> <a href="my_order.html" class="text-dark">My order</a></li>
+                        <li> <a href="status_complete.html" class="text-dark">Status Complete</a></li>
+                        <li> <a href="status_onprocess.html" class="text-dark">Status on Process</a></li>
+                        <li> <a href="status_canceled.html" class="text-dark">Status Canceled</a></li>
+                        <li> <a href="review.html" class="text-dark">Review</a></li>
                     </ul>
                 </aside>
                 <aside class="col-md">
                     <h6 class="title">My Account</h6>
                     <ul class="list-unstyled list-padding">
-                        <li><a class="text-dark" href="../../../../templates/userAccount.html"> My account</a></li>
-                        <li><a class="text-dark" href="promos.html"> Promos</a></li>
-                        <li><a class="text-dark" href="../../../../templates/my_address.html"> My address</a></li>
-                        <li><a class="text-dark" href="terms_conditions.html"> Terms &amp; conditions</a></li>
-                        <li><a class="text-dark" href="help_support.html"> Help &amp; support</a></li>
-                        <li><a class="text-dark" href="help_ticket.html"> Help ticket</a></li>
-                        <li><a class="text-dark" href="../../../../templates/signin.html"> Logout</a></li>
+                        <li> <a class="text-dark" href="my_account.html"> My account</a></li>
+                        <li> <a class="text-dark" href="promos.html"> Promos</a></li>
+                        <li> <a class="text-dark" href="my_address.html"> My address</a></li>
+                        <li> <a class="text-dark" href="terms_conditions.html"> Terms &amp; conditions</a></li>
+                        <li> <a class="text-dark" href="help_support.html"> Help &amp; support</a></li>
+                        <li> <a class="text-dark" href="help_ticket.html"> Help ticket</a></li>
+                        <li> <a class="text-dark" href="../../../../templates/signin.html"> Logout</a></li>
                     </ul>
                 </aside>
                 <aside class="col-md">
@@ -414,8 +208,7 @@
             <div class="modal-header p-0">
                 <nav class="schedule w-100">
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-link active col-5 py-4" id="nav-home-tab" data-toggle="tab"
-                           href="picks_today.html#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
+                        <a class="nav-link active col-5 py-4" id="nav-home-tab" data-toggle="tab" href="picks_today.html#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
                             <p class="mb-0 font-weight-bold">Sign in</p>
                         </a>
                         <a class="nav-link col-5 py-4" id="nav-profile-tab" data-toggle="tab"
@@ -440,28 +233,22 @@
                                 <form action="verification.html">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Email</label>
-                                        <input placeholder="Enter Email" type="email" class="form-control"
-                                               id="exampleInputEmail1" aria-describedby="emailHelp">
+                                        <input placeholder="Enter Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Password</label>
-                                        <input placeholder="Enter Password" type="password" class="form-control"
-                                               id="exampleInputPassword1">
+                                        <input placeholder="Enter Password" type="password" class="form-control" id="exampleInputPassword1">
                                     </div>
-                                    <button type="submit" class="btn btn-success btn-lg rounded btn-block">Sign in
-                                    </button>
+                                    <button type="submit" class="btn btn-success btn-lg rounded btn-block">Sign in</button>
                                 </form>
                                 <p class="text-muted text-center small m-0 py-3">or</p>
                                 <a href="verification.html" class="btn btn-dark btn-block rounded btn-lg btn-apple">
                                     <i class="icofont-brand-apple mr-2"></i> Sign up with Apple
                                 </a>
-                                <a href="verification.html"
-                                   class="btn btn-light border btn-block rounded btn-lg btn-google">
+                                <a href="verification.html" class="btn btn-light border btn-block rounded btn-lg btn-google">
                                     <i class="icofont-google-plus text-danger mr-2"></i> Sign up with Google
                                 </a>
-                                <p class="text-center mt-3 mb-0"><a href="../../../../templates/signup.html"
-                                                                    class="text-dark">Don't have an account? Sign up</a>
-                                </p>
+                                <p class="text-center mt-3 mb-0"><a href="../../../../templates/signup.html" class="text-dark">Don't have an account? Sign up</a></p>
                             </div>
                         </div>
                     </div>
@@ -473,44 +260,34 @@
                                 <form action="verification.html">
                                     <div class="form-group">
                                         <label for="exampleInputName1">Name</label>
-                                        <input placeholder="Enter Name" type="text" class="form-control"
-                                               id="exampleInputName1" aria-describedby="emailHelp">
+                                        <input placeholder="Enter Name" type="text" class="form-control" id="exampleInputName1" aria-describedby="emailHelp">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputNumber1">Phone Number</label>
-                                        <input placeholder="Enter Phone Number" type="number" class="form-control"
-                                               id="exampleInputNumber1" aria-describedby="emailHelp">
+                                        <input placeholder="Enter Phone Number" type="number" class="form-control" id="exampleInputNumber1" aria-describedby="emailHelp">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Email</label>
-                                        <input placeholder="Enter Email" type="email" class="form-control"
-                                               id="exampleInputEmail1" aria-describedby="emailHelp">
+                                        <input placeholder="Enter Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Password</label>
-                                        <input placeholder="Enter Password" type="password" class="form-control"
-                                               id="exampleInputPassword1">
+                                        <input placeholder="Enter Password" type="password" class="form-control" id="exampleInputPassword1">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword2">Confirmation Password</label>
-                                        <input placeholder="Enter Confirmation Password" type="password"
-                                               class="form-control" id="exampleInputPassword2">
+                                        <input placeholder="Enter Confirmation Password" type="password" class="form-control" id="exampleInputPassword2">
                                     </div>
-                                    <button type="submit" class="btn btn-success rounded btn-lg btn-block">Create
-                                        Account
-                                    </button>
+                                    <button type="submit" class="btn btn-success rounded btn-lg btn-block">Create Account</button>
                                 </form>
                                 <p class="text-muted text-center small py-2 m-0">or</p>
                                 <a href="verification.html" class="btn btn-dark btn-block rounded btn-lg btn-apple">
                                     <i class="icofont-brand-apple mr-2"></i> Sign up with Apple
                                 </a>
-                                <a href="verification.html"
-                                   class="btn btn-light border btn-block rounded btn-lg btn-google">
+                                <a href="verification.html" class="btn btn-light border btn-block rounded btn-lg btn-google">
                                     <i class="icofont-google-plus text-danger mr-2"></i> Sign up with Google
                                 </a>
-                                <p class="text-center mt-3 mb-0"><a href="../../../../templates/signin.html"
-                                                                    class="text-dark">Already have an account! Sign
-                                    in</a></p>
+                                <p class="text-center mt-3 mb-0"><a href="../../../../templates/signin.html" class="text-dark">Already have an account! Sign in</a></p>
                             </div>
                         </div>
                     </div>
@@ -518,8 +295,7 @@
             </div>
             <div class="modal-footer p-0 border-0">
                 <div class="col-6 m-0 p-0">
-                    <a href="picks_today.html#" class="btn border-top border-right btn-lg btn-block"
-                       data-dismiss="modal">Close</a>
+                    <a href="picks_today.html#" class="btn border-top border-right btn-lg btn-block" data-dismiss="modal">Close</a>
                 </div>
                 <div class="col-6 m-0 p-0">
                     <a href="help_support.html" class="btn border-top btn-lg btn-block">Help</a>
@@ -536,11 +312,6 @@
 <script type="acbe43e23f9329cc758dfd4d-text/javascript" src="vendor/sidebar/hc-offcanvas-nav.js"></script>
 
 <script src="js/osahan.js" type="acbe43e23f9329cc758dfd4d-text/javascript"></script>
-<script src="../../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
-        data-cf-settings="acbe43e23f9329cc758dfd4d-|49" defer></script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816"
-        integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw=="
-        data-cf-beacon='{"rayId":"7d447c3d6d542920","version":"2023.4.0","r":1,"b":1,"token":"dd471ab1978346bbb991feaa79e6ce5c","si":100}'
-        crossorigin="anonymous"></script>
+<script src="../../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="acbe43e23f9329cc758dfd4d-|49" defer></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816" integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw==" data-cf-beacon='{"rayId":"7d447c3d6d542920","version":"2023.4.0","r":1,"b":1,"token":"dd471ab1978346bbb991feaa79e6ce5c","si":100}' crossorigin="anonymous"></script>
 </body>
 </html>

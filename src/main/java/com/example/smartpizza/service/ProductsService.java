@@ -21,5 +21,7 @@ public interface ProductsService {
 
     List<Product> takeRandomProducts();
 
+    List<Product> randomProduct();
     Page<Product> createPageable(Optional<Integer> size, Optional<Integer> page, ProductType productType);
+
 }

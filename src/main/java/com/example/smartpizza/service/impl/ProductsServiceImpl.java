@@ -34,22 +34,11 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
-    public Page<Product> createPageable(Optional<Integer> size, Optional<Integer> page, ProductType productType) {
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(6);
-
-        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
-
-        return productRepository.findProductsByProductType(productType, pageable);
-    }
-
-    @Override
     public Product save(Product product, MultipartFile multipartFile) throws IOException {
         String productImageName = loadAndUploadImgService.uploadImg(currentDirectory.getCurrentDirectory() + imageUploadPath, multipartFile);
         product.setProductImg(productImageName);
         return productRepository.save(product);
     }
-
 
     @Override
     public void DeleteById(int id) {
@@ -64,6 +53,21 @@ public class ProductsServiceImpl implements ProductsService {
     @Override
     public Product searchProductById(int id) {
         return productRepository.findProductsById(id);
+    }
+
+    @Override
+    public List<Product> randomProduct() {
+        return productRepository.randomProduct();
+    }
+
+    @Override
+    public Page<Product> createPageable(Optional<Integer> size, Optional<Integer> page, ProductType productType) {
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(8);
+
+        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
+
+        return productRepository.findProductsByProductType(productType, pageable);
     }
 
 }
