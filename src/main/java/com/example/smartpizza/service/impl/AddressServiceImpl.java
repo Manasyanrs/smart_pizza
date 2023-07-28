@@ -31,10 +31,10 @@ public class AddressServiceImpl implements AddressService {
         addressRepository.deleteById(id);
     }
 
-    @Override
-    public Optional<Address> getAddressById(int id) {
-        return addressRepository.findById(id);
-    }
+//    @Override
+//    public Optional<Address> getAddressById(int id) {
+//        return addressRepository.findById(id);
+//    }
 
     @Override
     public void updateAddress(CurrentUser currentUser, Address address) {
@@ -45,5 +45,19 @@ public class AddressServiceImpl implements AddressService {
                 addressRepository.save(address);
             }
         }
+    }
+
+    @Override
+    public void updateOrAddNewAddress(CurrentUser currentUser, Address address) {
+        List<Address> userAddress = addressRepository.getAddressesByUserId(currentUser.getUser().getId());
+        if (userAddress.size() == 3) {
+            address.setId(3);
+            address.setUser(currentUser.getUser());
+            addressRepository.save(address);
+        } else {
+            address.setUser(currentUser.getUser());
+            addressRepository.save(address);
+        }
+
     }
 }

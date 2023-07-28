@@ -40,4 +40,12 @@ public class AddressController {
         addressService.updateAddress(currentUser, address);
         return "redirect:/address/user/address";
     }
+
+    @GetMapping("/add_address")
+    public String addUserAddress(@AuthenticationPrincipal CurrentUser currentUser,
+                                 @ModelAttribute Address address) {
+        addressService.updateOrAddNewAddress(currentUser, address);
+
+        return "redirect:/cart/cartProductList";
+    }
 }

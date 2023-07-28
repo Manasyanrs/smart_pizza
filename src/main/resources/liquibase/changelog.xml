@@ -197,6 +197,58 @@
         <dropColumn tableName="products" columnName="quantity" />
     </changeSet>
 
+    <changeSet id="createTableCart" author="rmanasyan">
+        <createTable tableName="carts">
+            <column name="id" type="int(11)" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="user_id" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 
+    <changeSet id="addTableCartProducts" author="rmanasyan">
+        <createTable tableName="cart_products">
+            <column  name="id" type="int(11)" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="cart_id" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_id" type="int(11)" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="count_product" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="createOrderTable" author="rmanasyan">
+        <createTable tableName="orders">
+            <column name="id" type="int(11)" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="delivery_address" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_time" type="datetime" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_payment_done" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_status" type="ENUM('DELIVERD', 'UNDELIVERD')" defaultValue="UNDELIVERD">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 
 </databaseChangeLog>

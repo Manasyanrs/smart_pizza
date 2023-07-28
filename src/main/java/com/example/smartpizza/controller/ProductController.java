@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,12 +25,6 @@ public class ProductController {
 
     private final ProductsService productsService;
 
-//    @GetMapping("/get_product_by_type")
-//    public String getProductByType(@RequestParam String productType, ModelMap modelMap) {
-//        modelMap.addAttribute("productType", productType);
-//        modelMap.addAttribute("products", productsService.searchProductByProductType(productType));
-//        return "picks_today";
-//    }
 
     @GetMapping("/single_page/{id}")
     public String productSinglePage(@PathVariable int id, ModelMap modelMap) {
@@ -40,12 +33,14 @@ public class ProductController {
         modelMap.addAttribute("productList", productsService.randomProduct());
         return "product_details";
     }
+
     @GetMapping("/get_product_by_type/type={type}")
-    public String getProductDetailPage(@PathVariable("type")String type, ModelMap modelMap,
+    public String getProductDetailPage(@PathVariable("type") String type, ModelMap modelMap,
                                        @RequestParam("size") Optional<Integer> size,
                                        @RequestParam("page") Optional<Integer> page) {
 
-
+        ProductType[] values = ProductType.values();
+        modelMap.addAttribute("productTypes", values);
 
         Page<Product> productsByProductType =
                 productsService.createPageable(size, page, ProductType.valueOf(type));
