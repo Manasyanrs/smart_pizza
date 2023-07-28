@@ -63,7 +63,8 @@
                             </div>
                             <div class="promo-slider pb-0 mb-0">
                                 <div class="osahan-slider-item mx-2" th:each="fastFood : ${fastFoodList}">
-                                    <a th:href="@{product/single_page/{id}(id=${fastFood.id})}" ><img th:src="@{/get_product_image(imageName=(${fastFood.getProductImg()}))}"
+                                    <a th:href="@{product/single_page/{id}(id=${fastFood.id})}"><img
+                                            th:src="@{/get_product_image(imageName=(${fastFood.getProductImg()}))}"
                                             class="img-fluid mx-auto rounded" alt="Responsive image"></a>
                                 </div>
                             </div>
@@ -77,7 +78,7 @@
 
                         <div class="pick_today">
                             <div class="row">
-                                <div class="col-6 col-md-3 mb-3" th:each="randomProduct : ${randomProducts}">
+                                <div class="col-6 col-md-3 mb-3" th:each="randomProduct, status : ${randomProducts}">
                                     <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
                                         <div class="list-card-image">
                                             <a th:href="@{product/single_page/{id}(id=${randomProduct.id})}"
@@ -86,24 +87,21 @@
                                                     <img th:src="@{/get_product_image(imageName=(${randomProduct.getProductImg()}))}"
                                                          class="img-fluid item-img w-100 mb-3">
                                                     <h6 th:text="${randomProduct.name}"></h6>
-                                                    <div class="d-flex align-items-center">
-                                                        <h6 class="price m-0 text-success"
-                                                            th:text="${randomProduct.price}"></h6>
-                                                        <a data-toggle="collapse" href="home.html#collapseExample1"
-                                                           role="button" aria-expanded="false"
-                                                           aria-controls="collapseExample1"
-                                                           class="btn btn-success btn-sm ml-auto">+</a>
-                                                        <div class="collapse qty_show" id="collapseExample1">
-                                                            <div>
-<span class="ml-auto" href="#">
-    <form class="cart-items-number d-flex" method="POST" action="home.html#">
-    <input type="button" value="-" class="qtyminus btn btn-success btn-sm" field="quantity"/>
-    <input type="text" name="quantity" value="1" class="qty form-control"/>
-    <input type="button" value="+" class="qtyplus btn btn-success btn-sm" field="quantity"/>
-    </form>
-</span>
-                                                            </div>
+                                                    <div class="d-flex align-items-center" style="display: flex; justify-content: space-between">
+                                                        <div>
+                                                            <h6 class="price m-0 text-success"
+                                                                th:text="${randomProduct.price}"></h6>
                                                         </div>
+
+                                                       <div>
+                                                           <form method="get" th:action="'/cart/' + ${randomProduct.getId()}">
+
+                                                               <button th:if="${currentUser != null}"
+                                                                       th:name="cartProducs[__${status.index}__].id" th:value="${randomProduct.id}">
+                                                                   Add to cart
+                                                               </button>
+                                                           </form>
+                                                       </div>
                                                     </div>
                                                 </div>
                                             </a>
@@ -181,11 +179,11 @@
                 <aside class="col-md">
                     <h6 class="title">Checkout Process</h6>
                     <ul class="list-unstyled list-padding">
-                        <li><a href="/askbootstrap/preview/vegishop/cart.html" class="text-dark">Cart</a></li>
-                        <li><a href="/askbootstrap/preview/vegishop/cart.html" class="text-dark">Order Address</a></li>
-                        <li><a href="/askbootstrap/preview/vegishop/cart.html" class="text-dark">Delivery Time</a></li>
-                        <li><a href="/askbootstrap/preview/vegishop/cart.html" class="text-dark">Order Payment</a></li>
-                        <li><a href="/askbootstrap/preview/vegishop/checkout.html" class="text-dark">Checkout</a></li>
+                        <li><a href="/templates/cart.html" class="text-dark">Cart</a></li>
+                        <li><a href="/templates/cart.html" class="text-dark">Order Address</a></li>
+                        <li><a href="/templates/cart.html" class="text-dark">Delivery Time</a></li>
+                        <li><a href="/templates/cart.html" class="text-dark">Order Payment</a></li>
+                        <li><a href="/templates/checkout.html" class="text-dark">Checkout</a></li>
                         <li><a href="/askbootstrap/preview/vegishop/successful.html" class="text-dark">Successful</a>
                         </li>
                     </ul>

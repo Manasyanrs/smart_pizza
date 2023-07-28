@@ -1,6 +1,6 @@
 package com.example.smartpizza.entity;
 
-import com.example.smartpizza.entity.productEntity.Product;
+import com.example.smartpizza.entity.userEntity.Address;
 import com.example.smartpizza.entity.userEntity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "orders")
 @Entity
 public class Order {
     @Id
@@ -23,9 +24,14 @@ public class Order {
     private int id;
     @OneToOne
     private User user;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "delivery_address")
+    private Address deliveryAddress;
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date dateTime;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Product> productList;
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    private List<CartProduct> cartProduct;
+    private boolean isPaymentDone;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
 }

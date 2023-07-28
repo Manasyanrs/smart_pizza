@@ -4,7 +4,6 @@ import com.example.smartpizza.entity.userEntity.Address;
 import com.example.smartpizza.security.CurrentUser;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface AddressService {
     Address save(Address address);
@@ -13,7 +12,9 @@ public interface AddressService {
 
     void deleteAddressById(int id);
 
-    Optional<Address> getAddressById(int id);
+//    Optional<Address> getAddressById(int id);
 
     void updateAddress(CurrentUser currentUser, Address address);
+
+    void updateOrAddNewAddress(CurrentUser currentUser, Address address);
 }

@@ -1,6 +1,5 @@
 package com.example.smartpizza.entity;
 
-import com.example.smartpizza.entity.productEntity.Product;
 import com.example.smartpizza.entity.userEntity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,6 +11,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "carts")
 @Entity
 public class Cart {
     @Id
@@ -19,7 +19,6 @@ public class Cart {
     private int id;
     @OneToOne
     private User user;
-
-    @ManyToMany()
-    private List<Product> cartProducts;
+    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
+    private List<CartProduct> cartProducts;
 }

@@ -25,7 +25,7 @@
 
                 </a>
 
-                <a href="/askbootstrap/preview/vegishop/cart.html"
+                <a href="/cart/cartProductList"
                    class="ml-2 text-dark bg-light rounded-pill p-2 icofont-size border shadow-sm">
                     <i class="icofont-shopping-cart"></i>
                 </a>
@@ -57,7 +57,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="/askbootstrap/preview/vegishop/listing.html">Listing</a>
                             <a class="dropdown-item"
-                               href="/templates/product_details.html">Detail</a>
+                               href="/product_details.html">Detail</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="/askbootstrap/preview/vegishop/picks_today.html">Trending</a>
                             <a class="dropdown-item"
@@ -73,8 +73,8 @@
                             Checkout Process
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/cart.html">Cart</a>
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/checkout.html">Checkout</a>
+                            <a class="dropdown-item" href="/cart/cartProductList">Cart</a>
+                            <a class="dropdown-item" href="/templates/checkout.html">Checkout</a>
                             <a class="dropdown-item"
                                href="/askbootstrap/preview/vegishop/successful.html">Successful</a>
                         </div>
@@ -120,14 +120,14 @@
                             <a class="dropdown-item" href="/askbootstrap/preview/vegishop/refund_payment.html">Refund
                                 Payment</a>
                             <a class="dropdown-item" href="/askbootstrap/preview/vegishop/faq.html">FAQ</a>
-                            <a class="dropdown-item" href="/templates/signin.html">Sign In</a>
-                            <a class="dropdown-item" href="/templates/signup.html">Sign Up</a>
+                            <a class="dropdown-item" href="/signin.html">Sign In</a>
+                            <a class="dropdown-item" href="/signup.html">Sign Up</a>
                             <a class="dropdown-item" href="/askbootstrap/preview/vegishop/search.html">Search</a>
                         </div>
                     </li>
                 </ul>
                 <div class="list-unstyled form-inline mb-0 ml-auto">
-                    <a href="/templates/picks_today.html" class="text-white px-3 py-2">Trending</a>
+                    <a href="/picks_today.html" class="text-white px-3 py-2">Trending</a>
                     <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('MANAGER')}" href="/manager" class="text-white bg-offer px-3 py-2"><i
                             class="icofont-sale-discount h6"></i>MANAGER PAGE</a>
                 </div>
