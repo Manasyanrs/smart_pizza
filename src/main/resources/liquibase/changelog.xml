@@ -188,13 +188,13 @@
                 <constraints nullable="false"/>
             </column>
             <column name="product_type" type="ENUM('DESSERT','FAST_FOOD','DRINK','BEER','WINE','PIZZA',
-            'SALAD','BREAD','SEAFOOD')" >
+            'SALAD','BREAD','SEAFOOD')">
                 <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
     <changeSet author="Raf" id="drop_column_quantity">
-        <dropColumn tableName="products" columnName="quantity" />
+        <dropColumn tableName="products" columnName="quantity"/>
     </changeSet>
 
     <changeSet id="createTableCart" author="rmanasyan">
@@ -210,7 +210,7 @@
 
     <changeSet id="addTableCartProducts" author="rmanasyan">
         <createTable tableName="cart_products">
-            <column  name="id" type="int(11)" autoIncrement="true">
+            <column name="id" type="int(11)" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="cart_id" type="int(11)">
@@ -219,11 +219,17 @@
             <column name="product_id" type="int(11)">
                 <constraints nullable="false"/>
             </column>
-            <column name="order_id" type="int(11)" defaultValue="false">
-                <constraints nullable="false"/>
+            <column name="order_id" type="int(11)" defaultValue="null">
+                <constraints nullable="true"/>
             </column>
             <column name="count_product" type="int(11)">
                 <constraints nullable="false"/>
+            </column>
+            <column name="order_status" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="delivery_address_id" type="int(11)" defaultValue="null">
+                <constraints nullable="true"/>
             </column>
         </createTable>
     </changeSet>
@@ -245,7 +251,29 @@
             <column name="is_payment_done" type="BOOLEAN" defaultValue="false">
                 <constraints nullable="false"/>
             </column>
-            <column name="order_status" type="ENUM('DELIVERD', 'UNDELIVERD')" defaultValue="UNDELIVERD">
+            <column name="order_status" type="ENUM('DELIVERED', 'UNDELIVERED', 'IN_PROCESS')"
+                    defaultValue="UNDELIVERED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_total_cost" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="createTableCourierDeliveries" author="rmanasyan">
+        <createTable tableName="courier_deliveries">
+            <column name="id" type="int(11)" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="order_id" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="courier_id" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_status" type="ENUM('DELIVERED', 'UNDELIVERED', 'IN_PROCESS')"
+                    defaultValue="IN_PROCESS">
                 <constraints nullable="false"/>
             </column>
         </createTable>

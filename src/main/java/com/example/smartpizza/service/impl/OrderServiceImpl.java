@@ -2,12 +2,15 @@ package com.example.smartpizza.service.impl;
 
 
 import com.example.smartpizza.entity.Order;
+import com.example.smartpizza.entity.OrderStatus;
 import com.example.smartpizza.repository.OrderRepository;
 import com.example.smartpizza.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,13 +24,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getOrders() {
-        return orderRepository.findAll();
+    public Optional<Order> getOrderByUserId(int id) {
+        return orderRepository.findOrderByUserId(id);
     }
 
     @Override
-    public Optional<Order> getOrderByUserId(int id) {
-        return orderRepository.findOrderByUserId(id);
+    public Page<Order> getUnDeliveredOrders(Optional<Integer> size, Optional<Integer> page) {
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(10);
+
+        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
+        return orderRepository.findOrdersByOrderStatus(OrderStatus.UNDELIVERED, pageable);
     }
 
 }

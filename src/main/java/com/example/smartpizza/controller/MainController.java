@@ -51,7 +51,7 @@ public class MainController {
             } else if (user.getUserRole() == UserRole.USER) {
                 return "redirect:/";
             } else if (user.getUserRole() == UserRole.COURIER) {
-                return "redirect:/currier";
+                return "redirect:/courier/delivery";
             } else if (user.getUserRole() == UserRole.MANAGER) {
                 return "redirect:/manager";
             }

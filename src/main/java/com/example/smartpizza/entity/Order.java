@@ -34,4 +34,5 @@ public class Order {
     private boolean isPaymentDone;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
+    private double orderTotalCost;
 }

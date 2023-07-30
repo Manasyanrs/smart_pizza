@@ -44,5 +44,3 @@ products:
 
 application:
   url: http://localhost:8080
-
-#MAVEN_OPTS: "-Xmx512m"

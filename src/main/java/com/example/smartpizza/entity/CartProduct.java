@@ -1,6 +1,7 @@
 package com.example.smartpizza.entity;
 
 import com.example.smartpizza.entity.productEntity.Product;
+import com.example.smartpizza.entity.userEntity.Address;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,4 +28,9 @@ public class CartProduct {
     private Order order;
 
     private int countProduct;
+    @Column(name = "order_status")
+    private boolean orderStatus;
+    @OneToOne
+    private Address deliveryAddress;
+
 }

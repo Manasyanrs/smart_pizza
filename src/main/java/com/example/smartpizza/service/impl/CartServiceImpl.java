@@ -10,7 +10,6 @@ import com.example.smartpizza.repository.AddressRepository;
 import com.example.smartpizza.repository.CartProductRepository;
 import com.example.smartpizza.repository.CartRepository;
 import com.example.smartpizza.repository.OrderRepository;
-import com.example.smartpizza.security.CurrentUser;
 import com.example.smartpizza.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,7 +39,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public double totalCost(Cart cart) {
-        List<CartProduct> allByCartId = cartProductRepository.findAllByCartId(cart.getId());
+        List<CartProduct> allByCartId = cartProductRepository.findAllByCartIdAndOrderStatusIsFalse(cart.getId());
         double totalCost = 0;
         if (!allByCartId.isEmpty()) {
             for (CartProduct cartProduct : allByCartId) {
@@ -64,33 +63,49 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void createOrder(int checkedAddressId, CurrentUser currentUser) {
-        Optional<Order> orderByUserId = orderRepository.findByUserId(currentUser.getUser().getId());
-        Address deliveryAddress = addressRepository.getById(checkedAddressId);
+    public void addDeliveryAddressToCart(int checkedAddressId, int currentUserId) {
+        Optional<Address> addressById = addressRepository.getAddressById(checkedAddressId);
+        Optional<Cart> cartByUserId = cartRepository.findCartByUserId(currentUserId);
 
-        if (orderByUserId.isEmpty()) {
-            int userId = currentUser.getUser().getId();
-            Cart cart = cartRepository.findCartByUserId(userId).get();
-            List<CartProduct> allByCartId = cartProductRepository.findAllByCartId(cart.getId());
-            Order order = Order.builder()
-                    .user(currentUser.getUser())
-                    .deliveryAddress(deliveryAddress)
-                    .dateTime(new Date())
-                    .cartProduct(allByCartId)
-                    .isPaymentDone(false)
-                    .orderStatus(OrderStatus.UNDELIVERD)
-                    .build();
-            orderRepository.save(order);
-        } else {
-            orderByUserId.get().setDeliveryAddress(deliveryAddress);
-            orderRepository.save(orderByUserId.get());
+        if (cartByUserId.isPresent()) {
+            List<CartProduct> allByCartId = cartProductRepository.findAllByCartId(cartByUserId.get().getId());
+            if (addressById.isPresent()) {
+                for (CartProduct cartProduct : allByCartId) {
+                    cartProduct.setDeliveryAddress(addressById.get());
+                }
+            }
+            cartProductRepository.saveAllAndFlush(allByCartId);
         }
     }
 
     @Override
     public void payForOrder(int id) {
-        Cart cart = cartRepository.findCartByUserId(id).get();
-        cartProductRepository.removeByCartId(cart.getId());
+        Optional<Cart> cartByUserId = cartRepository.findCartByUserId(id);
+        if (cartByUserId.isPresent()) {
+            Cart cart = cartByUserId.get();
+            List<CartProduct> cartProductByCartIdAndOrderStatusIsFalse = cartProductRepository.findCartProductByCartIdAndOrderStatusIsFalse(cart.getId());
+            Order order = Order.builder()
+                    .user(cartByUserId.get().getUser())
+                    .deliveryAddress(cartByUserId.get().getCartProducts().get(0).getDeliveryAddress())
+                    .dateTime(new Date())
+                    .cartProduct(cartProductByCartIdAndOrderStatusIsFalse)
+                    .isPaymentDone(false)
+                    .orderStatus(OrderStatus.UNDELIVERED)
+                    .orderTotalCost(totalCost(cart))
+                    .build();
+            orderRepository.save(order);
+
+            for (CartProduct cartProduct : cartProductByCartIdAndOrderStatusIsFalse) {
+                cartProduct.setOrderStatus(true);
+
+            }
+            cartProductRepository.saveAllAndFlush(cartProductByCartIdAndOrderStatusIsFalse);
+        }
+    }
+
+    @Override
+    public List<CartProduct> getUserCartProductList(int cartId) {
+        return cartProductRepository.findAllByCartIdAndOrderStatusIsFalse(cartId);
     }
 
 }
