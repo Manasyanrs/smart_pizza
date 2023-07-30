@@ -51,24 +51,24 @@
                         </h6>
                     </div>
 
-                    <div class="p-3">
+                    <div class="p-3" th:each="cartProduct: ${cartProducts.get(0)}">
                         <div class="d-flex align-items-center"
-                             th:if="${order.getDeliveryAddress().getId() == 1}">
+                             th:if="${cartProduct.getDeliveryAddress().getId() == 1}">
                             <p class="mb-2 font-weight-bold">Home</p>
                         </div>
-                        <div th:if="${order.getDeliveryAddress().getId() == 2}"
+                        <div th:if="${cartProduct.getDeliveryAddress().getId() == 2}"
                              class="d-flex align-items-center mb-2">
                             <p class="mb-2 font-weight-bold">Work</p>
                         </div>
-                        <div th:if="${order.getDeliveryAddress().getId() == 3}"
+                        <div th:if="${cartProduct.getDeliveryAddress().getId() == 3}"
                              class="d-flex align-items-center mb-2">
                             <p class="mb-2 font-weight-bold">Other</p>
                         </div>
 
                         <p class="small text-muted m-0"
-                           th:text="${order.getDeliveryAddress().getRegion()} + ',  ' + ${order.getDeliveryAddress().getCity()}"></p>
+                           th:text="${cartProduct.getDeliveryAddress().getRegion()} + ',  ' + ${cartProduct.getDeliveryAddress().getCity()}"></p>
                         <p class="small text-muted m-0"
-                           th:text="${order.getDeliveryAddress().getStreet()} + ',  ' + ${order.getDeliveryAddress().getApartmentNumber()}"></p>
+                           th:text="${cartProduct.getDeliveryAddress().getStreet()} + ',  ' + ${cartProduct.getDeliveryAddress().getApartmentNumber()}"></p>
 
 
                     </div>
@@ -102,7 +102,7 @@
                             <div class="bg-white p-3 clearfix">
                                 <p class="font-weight-bold small mb-2">Bill Details</p>
                                 <p class="mb-1">Item Total <span class="small text-muted"
-                                                                 th:text="'( ' + ${order.getCartProduct().size()} + ' items)'"></span>
+                                                                 th:text="'( ' + ${cartProducts.size()} + ' items)'"></span>
                                     <span
                                             class="float-right text-dark" th:text="'$' + ${totalCoast}"></span></p>
                                 <div class="p-3 border-top">

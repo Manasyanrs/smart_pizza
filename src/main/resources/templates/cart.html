@@ -40,7 +40,11 @@
         </ol>
     </div>
 </nav>
-<section class="py-4 osahan-main-body">
+<div th:if="${productList.size() == 0}" style="color: indianred; display: flex; justify-content: center">
+    <h1>Cart is empty!</h1>
+</div>
+
+<section class="py-4 osahan-main-body" th:if="${productList.size() > 0}">
     <div class="container">
         <div class="row" style="justify-content: center;">
             <div class="col-lg-8">

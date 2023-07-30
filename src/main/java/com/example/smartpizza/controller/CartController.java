@@ -2,6 +2,7 @@ package com.example.smartpizza.controller;
 
 
 import com.example.smartpizza.entity.Cart;
+import com.example.smartpizza.entity.CartProduct;
 import com.example.smartpizza.security.CurrentUser;
 import com.example.smartpizza.service.AddressService;
 import com.example.smartpizza.service.CartProductService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -40,7 +42,6 @@ public class CartController {
         return "redirect:/cart/add/" + id;
     }
 
-
     @GetMapping("/add/{id}")
     public String addProductToCart(@PathVariable("id") int productId,
                                    @AuthenticationPrincipal CurrentUser currentUser) {
@@ -56,10 +57,16 @@ public class CartController {
     @GetMapping("/cartProductList")
     public String getOrderList(@AuthenticationPrincipal CurrentUser currentUser,
                                ModelMap modelMap) {
-        Cart cart = cartService.getCartByUserId(currentUser.getUser().getId()).get();
-        modelMap.addAttribute("productList", cart.getCartProducts());
-        double totalCost = cartService.totalCost(cart);
-        modelMap.addAttribute("totalCost", totalCost);
+        Optional<Cart> cartByUserId = cartService.getCartByUserId(currentUser.getUser().getId());
+        if (cartByUserId.isPresent()) {
+            Cart cart = cartByUserId.get();
+            List<CartProduct> cartProductList = cartService.getUserCartProductList(cart.getId());
+
+            modelMap.addAttribute("productList", cartProductList);
+            double totalCost = cartService.totalCost(cart);
+            modelMap.addAttribute("totalCost", totalCost);
+        }
+
         modelMap.addAttribute("userAddress", addressService.getAddressesByUserId(currentUser.getUser().getId()));
         return "cart";
     }
@@ -68,16 +75,18 @@ public class CartController {
     @GetMapping("/delete_product/{id}")
     public String deleteProduct(@PathVariable("id") int id,
                                 @AuthenticationPrincipal CurrentUser currentUser) {
-        Cart cart = cartService.getCartByUserId(currentUser.getUser().getId()).get();
-        cartService.deleteProductById(cart, id);
-
+        Optional<Cart> cartByUserId = cartService.getCartByUserId(currentUser.getUser().getId());
+        if (cartByUserId.isPresent()) {
+            Cart cart = cartByUserId.get();
+            cartService.deleteProductById(cart, id);
+        }
         return "redirect:/cart/cartProductList";
     }
 
     @GetMapping("/order/{id}")
     public String getCartOrder(@PathVariable("id") int checkedAddressId, @AuthenticationPrincipal CurrentUser currentUser) {
         if (currentUser != null) {
-            cartService.createOrder(checkedAddressId, currentUser);
+            cartService.addDeliveryAddressToCart(checkedAddressId, currentUser.getUser().getId());
             return "redirect:/order";
         }
 

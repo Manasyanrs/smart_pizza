@@ -25,7 +25,7 @@
 
                 </a>
 
-                <a href="/cart/cartProductList"
+                <a href="/cart/cartProductList" th:if="${currentUser != null}"
                    class="ml-2 text-dark bg-light rounded-pill p-2 icofont-size border shadow-sm">
                     <i class="icofont-shopping-cart"></i>
                 </a>
@@ -127,9 +127,11 @@
                     </li>
                 </ul>
                 <div class="list-unstyled form-inline mb-0 ml-auto">
-                    <a href="/picks_today.html" class="text-white px-3 py-2">Trending</a>
+                    <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('COURIER')}" href="/courier/my_deliveries" class="text-white px-3 py-2">My Deliveries</a>
                     <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('MANAGER')}" href="/manager" class="text-white bg-offer px-3 py-2"><i
                             class="icofont-sale-discount h6"></i>MANAGER PAGE</a>
+                    <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('COURIER')}" href="/courier/delivery" class="text-white bg-offer px-3 py-2"><i
+                            class="icofont-sale-discount h6"></i>DELIVERY PAGE</a>
                 </div>
             </div>
         </div>
