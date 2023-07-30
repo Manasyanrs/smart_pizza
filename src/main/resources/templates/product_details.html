@@ -32,12 +32,13 @@
                     </div>
                 </div>
                 <div class="pd-f d-flex align-items-center mb-3">
-                    <a href="cart.html"
-                       class="btn btn-warning p-3 rounded btn-block d-flex align-items-center justify-content-center mr-3 btn-lg"><i
-                            class="icofont-plus m-0 mr-2"></i> ADD TO CART</a>
-                    <a href="cart.html"
-                       class="btn btn-success p-3 rounded btn-block d-flex align-items-center justify-content-center btn-lg m-0"><i
-                            class="icofont-cart m-0 mr-2"></i> BUY NOW</a>
+                    <form method="get" th:action="'/cart/' + ${product.getId()}">
+                        <button
+                                class="btn btn-warning p-3 rounded btn-block d-flex align-items-center justify-content-center mr-3 btn-lg">
+                            <i
+                                    class="icofont-plus m-0 mr-2"></i> ADD TO CART
+                        </button>
+                    </form>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -79,9 +80,9 @@
                             <h6 th:text="${productByType.name}"></h6>
                             <div class="d-flex align-items-center">
                                 <h6 class="price m-0 text-success" th:text="${productByType.price} + ' PRICE' "></h6>
-<!--                                <a data-toggle="collapse" th:href="@{product/single_page/{id}(id=${productByType.id})}"-->
-<!--                                   role="button" aria-expanded="false" aria-controls="collapseExample1"-->
-<!--                                   class="btn btn-success btn-sm ml-auto">+</a>-->
+                                <!--                                <a data-toggle="collapse" th:href="@{product/single_page/{id}(id=${productByType.id})}"-->
+                                <!--                                   role="button" aria-expanded="false" aria-controls="collapseExample1"-->
+                                <!--                                   class="btn btn-success btn-sm ml-auto">+</a>-->
                                 <div class="collapse qty_show" id="collapseExample1">
                                     <div>
                                     </div>
@@ -90,6 +91,13 @@
                         </div>
                     </a>
                 </div>
+                <form method="get" th:action="'/cart/' + ${product.getId()}">
+                    <button
+                            class="btn btn-warning p-3 rounded btn-block d-flex align-items-center justify-content-center mr-3 btn-lg">
+                        <i
+                                class="icofont-plus m-0 mr-2"></i> ADD TO CART
+                    </button>
+                </form>
             </div>
         </div>
 
