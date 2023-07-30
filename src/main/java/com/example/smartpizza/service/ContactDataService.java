@@ -10,4 +10,6 @@ public interface ContactDataService {
     Optional<ContactData> findUserEmail(String email);
 
     ContactData getDataById(int id);
+
+    void deleteById(int id);
 }

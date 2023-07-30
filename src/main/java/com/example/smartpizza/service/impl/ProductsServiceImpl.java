@@ -70,4 +70,10 @@ public class ProductsServiceImpl implements ProductsService {
         return productRepository.findProductsByProductType(productType, pageable);
     }
 
+    @Override
+    public int sizeListOfProduct() {
+        int  a = productRepository.listSize();
+        return productRepository.listSize();
+    }
+
 }

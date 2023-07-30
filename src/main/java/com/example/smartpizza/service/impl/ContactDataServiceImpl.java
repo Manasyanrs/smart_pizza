@@ -28,4 +28,9 @@ public class ContactDataServiceImpl implements ContactDataService {
     public ContactData getDataById(int id) {
         return contactDataRepository.findById(id).get();
     }
+
+    @Override
+    public void deleteById(int id) {
+        contactDataRepository.deleteById(id);
+    }
 }

@@ -27,58 +27,16 @@
 <body class="fixed-bottom-padding">
 <div th:insert="~{fragment/header::headerFragment}"></div>
 <section style="display: flex; flex-direction: column; padding: 10px">
-    <h4 class="mb-4 profile-title" style=color:orange>ADD PRODUCT</h4>
 
-    <div class="pb-3" style=background-color:orange>
-        <form action="/manager" method="post" enctype="multipart/form-data">
-            <div style="display: flex; justify-content: center">
-                <label>
-                    Product name<br>
-                    <input type="text" name="name" style="margin-top: 10px">
-                </label>
-                <label style="margin-left: 20px">
-                    Description<br>
-                    <input type="text" name="description" style="margin-top: 10px">
-                </label>
-                <label style="margin-left: 20px">
-                    PRODUCT TYPE <br>
-                    <select name="productType" th:value="productType" style="margin-top: 10px">
-                        <option th:each="productType : ${productTypes}" th:text="${productType.name()}"
-                        ></option>
-                    </select>
-                </label>
-                <label style="margin-left: 20px">
-                    PRICE<br>
-                    <input type="text" name="price" style="margin-top: 10px">
-                </label>
-                <label style="margin-left: 20px">
-                    VOLUME<br>
-                    <input type="number" name="volume" style="margin-top: 10px">
-                </label>
-                <label style="margin-left: 20px">
-                    PRODUCT IMAGE<br>
-                    <input type="file" name="image" style="margin-top: 10px">
-                </label>
-                <label>
-                    <br>
-                    <input type="submit" value="ADD" style="margin-top: 10px">
-                </label>
-            </div>
-        </form>
-    </div>
     <div class="osahan-body">
-
         <div class="pt-3 pb-2 rounded osahan-categories">
-            <div class="d-flex align-items-center mb-2">
-                <h5 class="m-0 text-white">CATALOG</h5>
-            </div>
             <div class="categories-slider">
                 <div class="col-c" th:each="productType : ${productTypes}">
                     <div class="bg-white shadow-sm rounded text-center my-2 px-2 py-3 c-it">
-                        <a th:href="@{/manager/take_product_by_type/type={type}(type=${productType})}">
+                        <a th:href="@{/admin/take_product_by_type/type={type}(type=${productType})}">
                             <img src="/askbootstrap/preview/vegishop/img/categorie/8.svg"
                                  class="img-fluid px-2 mx-auto">
-                            <p class="m-0 pt-2 text-muted text-center" th:text="${productType}"></p></a>
+                            <h6 class="m-0 pt-2 text-muted text-center" th:text="${productType}"></h6></a>
                     </div>
                 </div>
             </div>
@@ -90,12 +48,13 @@
             <div class="col-6 col-md-3 mb-3" th:each="product : ${products}" style="height:250px;">
                 <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
                     <div class="list-card-image">
-                        <a th:href="@{/manager/delete_product(id=${product.getId()})}"
-                           class="text-dark"><h4>DELETE</h4></a>
+                        <a th:href="@{/admin/delete_product(id=${product.getId()})}"
+                           class="text-dark"><h6 style=color:orange>DELETE</h6></a>
+                        <h6 th:text="${product.name}"></h6>
                         <div class="p-3">
                             <img th:src="@{/get_product_image(imageName=(${product.getProductImg()}))}"
-                                 class="img-fluid item-img w-100 mb-3" style=height:140px width=90px>
-                            <h6 th:text="${product.name}"></h6>
+                                 class="img-fluid item-img w-100 mb-3" style=height:190px >
+
                             <div class="d-flex align-items-center">
                                 <h6 class="price m-0 text-success"
                                     th:text="${product.price}"></h6>
@@ -113,14 +72,13 @@
              th:each="pageNumber : ${pageNumbers}">
 
             <a style="display: flex; margin-left: 10px"
-               th:href="@{'/manager/take_product_by_type/type='+${productType}(size=${products.size}, page=${pageNumber})}"
+               th:href="@{'/admin/take_product_by_type/type='+${productType}(size=${products.size}, page=${pageNumber})}"
                th:text="${pageNumber}"
                th:class="${pageNumber==products.number + 1} ? active"></a>
         </div>
     </div>
 </section>
 <div th:insert="~{fragment/footer::footerFragment}"></div>
-
 
 <script data-cfasync="false"
         src="/askbootstrap/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
