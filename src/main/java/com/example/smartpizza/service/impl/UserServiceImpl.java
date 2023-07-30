@@ -115,4 +115,24 @@ public class UserServiceImpl implements UserService {
     public void saveUserObject(User user) {
         userRepository.save(user);
     }
+
+    @Override
+    public int userListSize() {
+        return userRepository.userListSize() - 1;
+    }
+
+    @Override
+    public void deleteUserById(int id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public User getUserById(int id) {
+        return userRepository.findUserById(id).get();
+    }
+
+    @Override
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
 }

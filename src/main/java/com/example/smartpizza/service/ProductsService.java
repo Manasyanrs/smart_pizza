@@ -20,6 +20,7 @@ public interface ProductsService {
     Product searchProductById(int id);
 
     List<Product> takeRandomProducts();
+    int sizeListOfProduct();
 
     List<Product> randomProduct();
     Page<Product> createPageable(Optional<Integer> size, Optional<Integer> page, ProductType productType);

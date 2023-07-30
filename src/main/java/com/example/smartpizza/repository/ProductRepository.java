@@ -25,5 +25,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Product findProductsById(int id);
 
     Page<Product> findProductsByProductType(ProductType productType, Pageable pageable);
+    @Query(value = "SELECT COUNT(*) AS size FROM products", nativeQuery = true)
+    int listSize();
 
 }

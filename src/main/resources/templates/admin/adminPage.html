@@ -40,7 +40,6 @@
 <body class="fixed-bottom-padding">
 
 <div th:insert="~{fragment/header::headerFragment}"></div>
-
 <nav aria-label="breadcrumb" class="breadcrumb mb-0">
     <div class="container">
         <ol class="d-flex align-items-center mb-0 p-0">
@@ -69,30 +68,25 @@
                         <h6 class="font-weight-bold m-0 mt-2"
                             th:text="${currentUser.getName() + ' ' + currentUser.getSurname()}"></h6>
                         <p class="small text-muted m-0">
-                        <h6 th:text="${currentUser.getContactData().getEmail()}"></h6>
+                        <h6>ADMIN</h6>
                         </p>
                     </div>
                     <div class="account-sections">
                         <ul class="list-group">
-                            <a href="/user/account" class="text-decoration-none text-dark">
+                            <a href="/admin/user_setting" class="text-decoration-none text-dark">
                                 <li class="border-bottom bg-white d-flex align-items-center p-3">
-                                    <i class="icofont-user osahan-icofont bg-danger"></i>My Account
+                                    <i class="icofont-user osahan-icofont bg-danger"></i>USERS SETTING
                                     <span class="badge badge-success p-1 badge-pill ml-auto"><i
                                             class="icofont-simple-right"></i></span>
                                 </li>
                             </a>
 
-                            <a href="/address/user/address"
+                            <a href="/admin/product"
                                class="text-decoration-none text-dark">
                                 <li class="border-bottom bg-white d-flex align-items-center p-3">
-                                    <i class="icofont-address-book osahan-icofont bg-dark"></i>My Address
+                                    <i class="icofont-sale-discount osahan-icofont bg-success"></i>PRODUCT PAGE
                                     <span class="badge badge-success p-1 badge-pill ml-auto"><i
                                             class="icofont-simple-right"></i></span>
-                                </li>
-                            </a>
-                            <a href="/logout" class="text-decoration-none text-dark">
-                                <li class="border-bottom bg-white d-flex  align-items-center p-3">
-                                    <i class="icofont-lock osahan-icofont bg-danger"></i> Logout
                                 </li>
                             </a>
                         </ul>
@@ -100,65 +94,20 @@
                 </div>
             </div>
             <div class="col-lg-8 p-4 bg-white rounded shadow-sm">
-                <h4 class="mb-4 profile-title">My account</h4>
-                <span th:if="${msg}" th:text="${msg}" style="color: red"></span>
-
+                <h4 class="mb-4 profile-title" style=margin-left:280px>RESOURCES</h4>
                 <div id="edit_profile">
                     <div class="p-0">
-                        <form method="post" th:action="@{'/user/'+ ${currentUser.getId()} +'/updateData'}">
 
                             <div class="form-group">
-                                <label for="exampleInputName1">Name</label>
-                                <input type="text" class="form-control"
-                                       id="exampleInputName1" name="name"
-                                       th:value="${currentUser.getName()}">
+                                    <li class="border-bottom bg-white d-flex align-items-center p-3">
+                                        <i class="icofont-user osahan-icofont bg-danger"></i> <h6>USERS COUNT - </h6><h6 th:text="${userListSize}"></h6>
+                                    </li>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputSurnameName1">Surame</label>
-                                <input type="text" class="form-control" id="exampleInputSurnameName1" name="surname"
-                                       th:value="${currentUser.getSurname()}">
+                                    <li class="border-bottom bg-white d-flex align-items-center p-3">
+                                        <i class="icofont-sale-discount osahan-icofont bg-success"></i> <h6>PRODUCT COUNT - </h6> <h6 th:text="${productListSize}"></h6>
+                                    </li>
                             </div>
-
-                            <label for="exampleInputNumber2">Phone Number</label>
-
-                            <div class="phone">
-                                <div class="code">
-                                    <h6>+374</h6>
-                                </div>
-                                <div class="operatorCode">
-                                    <select th:name="operatorCode">
-                                        <option th:each="operatorCode: ${operatorCodes}"
-                                                th:text="${operatorCode.getOperatorCode()}"
-                                                th:value="${operatorCode.getOperatorCode()}"></option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <input style="margin-left: 10px" placeholder="123456" type="tel"
-                                           class="form-control"
-                                           id="exampleInputNumber2" aria-describedby="emailHelp"
-                                           name="phoneNumber"
-                                           th:value="${currentUser.getContactData().getPhoneNumber().substring(8)}"
-                                           required/>
-
-                                </div>
-                            </div>
-
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-success btn-block btn-lg">Save Changes</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="additional mt-3">
-                        <div class="change_password mb-1">
-                            <a href="/user/change_password"
-                               class="p-3 btn-light border btn d-flex align-items-center">Change Password
-                                <i class="icofont-rounded-right ml-auto"></i></a>
-                        </div>
-                        <div class="deactivate_account">
-                            <a href="/user/deactivate_account"
-                               class="p-3 btn-light border btn d-flex align-items-center">Deactivate Account
-                                <i class="icofont-rounded-right ml-auto"></i></a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -167,6 +116,7 @@
 </section>
 
 <div th:insert="~{fragment/footer::footerFragment}"></div>
+
 
 <div th:insert="~{fragment/loginPanel::loginRegisterPanel}"></div>
 

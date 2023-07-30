@@ -49,89 +49,23 @@
                         <a class="nav-link text-white pl-0" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link text-white dropdown-toggle" href="home.html#" id="navbarDropdown2"
-                           role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Products
-                        </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/listing.html">Listing</a>
-                            <a class="dropdown-item"
-                               href="/product_details.html">Detail</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/picks_today.html">Trending</a>
-                            <a class="dropdown-item"
-                               href="/askbootstrap/preview/vegishop/recommend.html">Recommended</a>
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/fresh_vegan.html">Most
-                                Popular</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link text-white dropdown-toggle" href="home.html#" id="navbarDropdown3"
-                           role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Checkout Process
-                        </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/cart/cartProductList">Cart</a>
-                            <a class="dropdown-item" href="/templates/checkout.html">Checkout</a>
-                            <a class="dropdown-item"
-                               href="/askbootstrap/preview/vegishop/successful.html">Successful</a>
+
                         </div>
                     </li>
+
                     <li class="nav-item dropdown">
-                        <a class="nav-link text-white dropdown-toggle" href="home.html#" id="navbarDropdown4"
-                           role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            My Order
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/my_order.html">My order</a>
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/status_complete.html">Status
-                                Complete</a>
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/status_onprocess.html">Status
-                                on
-                                Process</a>
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/status_canceled.html">Status
-                                Canceled</a>
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/review.html">Review</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link text-white dropdown-toggle" href="home.html#" id="navbarDropdown"
-                           role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Extra Pages
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item"
-                               href="/askbootstrap/preview/vegishop/verification.html">Verification</a>
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/promos.html">Promos</a>
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/promo_details.html">Promo
-                                Details</a>
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/terms_conditions.html">Terms &
-                                Conditions</a>
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/privacy.html">Privacy</a>
-                            <a class="dropdown-item" href="terms&amp;conditions.html">Conditions</a>
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/help_support.html">Help
-                                Support</a>
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/help_ticket.html">Help
-                                Ticket</a>
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/refund_payment.html">Refund
-                                Payment</a>
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/faq.html">FAQ</a>
-                            <a class="dropdown-item" href="/signin.html">Sign In</a>
-                            <a class="dropdown-item" href="/signup.html">Sign Up</a>
-                            <a class="dropdown-item" href="/askbootstrap/preview/vegishop/search.html">Search</a>
-                        </div>
                     </li>
                 </ul>
                 <div class="list-unstyled form-inline mb-0 ml-auto">
                     <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('COURIER')}" href="/courier/my_deliveries" class="text-white px-3 py-2">My Deliveries</a>
+                    <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('ADMIN')}" href="/admin" class="text-white px-3 py-2">ADMIN PAGE</a>
                     <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('MANAGER')}" href="/manager" class="text-white bg-offer px-3 py-2"><i
                             class="icofont-sale-discount h6"></i>MANAGER PAGE</a>
-                    <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('COURIER')}" href="/courier/delivery" class="text-white bg-offer px-3 py-2"><i
-                            class="icofont-sale-discount h6"></i>DELIVERY PAGE</a>
                 </div>
             </div>
         </div>
