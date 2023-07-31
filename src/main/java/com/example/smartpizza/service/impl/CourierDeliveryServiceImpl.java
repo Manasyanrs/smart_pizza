@@ -25,6 +25,7 @@ public class CourierDeliveryServiceImpl implements CourierDeliveryService {
             CourierDelivery build = CourierDelivery.builder()
                     .order(orderById.get())
                     .courierId(courierId)
+                    .orderStatus(OrderStatus.IN_PROCESS)
                     .build();
             courierDeliveryRepository.save(build);
             orderById.get().setOrderStatus(OrderStatus.IN_PROCESS);
@@ -45,6 +46,5 @@ public class CourierDeliveryServiceImpl implements CourierDeliveryService {
             courierDeliveryRepository.save(courierDelivery);
         }
     }
-
 
 }

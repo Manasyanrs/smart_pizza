@@ -66,6 +66,8 @@
                     <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('ADMIN')}" href="/admin" class="text-white px-3 py-2">ADMIN PAGE</a>
                     <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('MANAGER')}" href="/manager" class="text-white bg-offer px-3 py-2"><i
                             class="icofont-sale-discount h6"></i>MANAGER PAGE</a>
+                    <a th:if="${currentUser != null && currentUser.getUserRole().name.equals('COURIER')}" href="/courier/delivery" class="text-white bg-offer px-3 py-2"><i
+                            class="icofont-sale-discount h6"></i>DELIVERY PAGE</a>
                 </div>
             </div>
         </div>
